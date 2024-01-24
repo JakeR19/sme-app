@@ -41,7 +41,7 @@ model Session {
 
 model User {
     id            String    @id @default(cuid())
-    name          String?
+    name          String? 
     email         String?   @unique
     emailVerified DateTime?
     image         String?
@@ -49,7 +49,6 @@ model User {
     sessions      Session[]
 
     answers        Answer[]
-    questions      Question[]
     questionnaires Questionnaire[]
 }
 
@@ -63,7 +62,7 @@ model VerificationToken {
 
 model Question {
     id String @id @default(cuid())
-    title String
+    title String @db.LongText
     questionWeight Int
     page String
     type String
@@ -77,18 +76,7 @@ model Question {
     // i.e. a question can have many answers
     answers Answer[]
 
-    // many to one
-    // i.e. many questions belong to one questionnaire
-    questionnaire Questionnaire @relation(fields: [questionnaireId], references: [id])
-    questionnaireId String
-
-    user  User @relation(fields: [userId], references: [id])
-    userId String
-
     createdAt DateTime @default(now())
-
-    @@index([userId])
-    @@index([questionnaireId])
 }
 
 model Answer {
@@ -116,9 +104,6 @@ model Questionnaire {
     companyName String
     sector String
     
-    // one to many
-    // i.e. a questionnaire has many questions 
-    questions Question[]
 
     userId String
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
