@@ -1,29 +1,19 @@
-"use client";
-import { useSession } from "next-auth/react";
 import LoginCard from "~/components/common/login-card";
+import Dashboard from "~/components/pages/dashboard";
+import { getServerAuthSession } from "~/server/auth";
 
-export default function Home() {
-  const { data: session } = useSession();
-  // const session = getServerAuthSession();
-  // const makeApiCall = async () => {
-  //   await fetch("/api/test", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ data: "test" }),
-  //   }).then(async (res) => {
-  //     const data = (await res.json()) as string;
-  //     console.log(data);
-  //   });
-  // };
+export default async function Home() {
+  const session = await getServerAuthSession();
+
   if (!session) {
     return <LoginCard />;
   }
 
   return (
     <main className="">
-      <h1>hello</h1>
+      <h1>
+        <Dashboard />
+      </h1>
     </main>
   );
 }

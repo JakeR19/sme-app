@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
 import { cn } from "~/lib/utils";
 
 export default function NavigationBar({
@@ -12,18 +11,16 @@ export default function NavigationBar({
 }) {
   const pathname = usePathname();
 
-  const navigationMap = useMemo(() => {
-    return [
-      {
-        name: "Dashboard",
-        href: "/",
-      },
-      {
-        name: "Questionnaire",
-        href: "/questionnaire",
-      },
-    ];
-  }, []);
+  const navigationMap = [
+    {
+      name: "Dashboard",
+      href: "/",
+    },
+    {
+      name: "Questionnaire",
+      href: "/questionnaire",
+    },
+  ];
 
   return (
     <div className="flex h-screen min-h-0 w-56 flex-1 flex-col border-r border-gray-200 bg-white">
@@ -40,7 +37,7 @@ export default function NavigationBar({
                 key={name}
                 href={href}
                 className={cn(
-                  pathname === href ? "bg-slate-200" : "",
+                  pathname === href ? "bg-slate-100" : "",
                   `flex items-center space-x-3 rounded-lg px-2`,
                   `py-1.5 transition-all duration-150 ease-in-out`,
                   `hover:bg-slate-100 active:bg-slate-200`,

@@ -10,7 +10,7 @@ import LoginButton from "./login-button";
 
 export default function LoginCard() {
   return (
-    <div className="mx-5 mx-auto flex h-screen w-screen items-center justify-center">
+    <div className="flexp mx-5 mx-auto mt-40 items-center justify-center">
       <Card className={cn("w-[400px] bg-slate-100/30")}>
         <CardHeader>
           <CardTitle className="font-bold">Login</CardTitle>

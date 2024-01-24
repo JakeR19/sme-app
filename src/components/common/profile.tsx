@@ -1,16 +1,12 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 
-import { useSession } from "next-auth/react";
-
 import { type Session } from "next-auth";
-import { Button } from "../ui/button";
 import LogoutButton from "./logout-button";
+import { getServerAuthSession } from "~/server/auth";
 
-export default function Profile() {
-  const { data: session } = useSession();
+export default async function Profile() {
+  const session = await getServerAuthSession();
 
   return (
     <div className="flex w-full items-center justify-between">
@@ -22,7 +18,7 @@ export default function Profile() {
       ) : (
         <div className="mx-auto my-2 flex text-center">
           <Link href="/login">
-            <Button>Login</Button>
+            <div>Login</div>
           </Link>
         </div>
       )}
