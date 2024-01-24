@@ -1,6 +1,9 @@
+"use client";
+
 import { cn } from "~/lib/utils";
 import NavigationBar from "./navigation-bar";
 import Profile from "./profile";
+import { useSession } from "next-auth/react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,6 +14,11 @@ export default function PageLayout({
   children,
   customWidth = "1000",
 }: LayoutProps) {
+  const { data: session } = useSession();
+  if (!session) {
+    return children;
+  }
+
   return (
     <div className="flex flex-col lg:flex-row">
       <div className="sticky top-0 z-20">
