@@ -1,5 +1,4 @@
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { Input } from "@chakra-ui/react";
 import {
   Select,
   SelectContent,
@@ -14,11 +13,12 @@ export default function InformationStep({
   onChange: (name: string, value: string) => void;
 }) {
   return (
-    <>
+    <div className="ml-5">
       <div className="w-full space-y-4">
         <div className="max-w-[300px] space-y-1">
-          <Label htmlFor="companyName">Company name</Label>
+          <p className="text-sm font-semibold">Company name</p>
           <Input
+            focusBorderColor={"black"}
             onChange={(e) => onChange("companyName", e.target.value)}
             name="companyName"
             id="companyName"
@@ -26,7 +26,7 @@ export default function InformationStep({
           />
         </div>
         <div className="max-w-[300px] space-y-1">
-          <Label htmlFor="sector">Sector</Label>
+          <p className="text-sm font-semibold">Sector</p>
           <Select
             name="sector"
             onValueChange={(value) => onChange("sector", value)}
@@ -49,6 +49,6 @@ export default function InformationStep({
           </Select>
         </div>
       </div>
-    </>
+    </div>
   );
 }

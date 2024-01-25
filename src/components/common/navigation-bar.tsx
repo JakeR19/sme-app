@@ -25,7 +25,7 @@ export default function NavigationBar({
   return (
     <div className="flex h-screen min-h-0 w-56 flex-1 flex-col border-r border-gray-200 bg-white">
       <div className="flex flex-1 flex-col overflow-y-auto pb-4 pt-5">
-        <div className="flex border-b px-4 pb-4">
+        <div className="flex border-b border-slate-200 px-4 pb-4">
           <Link href="/" className="flex gap-2">
             <h2 className="my-auto font-bold text-black">SME</h2>
           </Link>

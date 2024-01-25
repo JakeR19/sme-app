@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "../../ui/button";
+
 import { type QuestionsFetchReturnType } from "~/lib/types/questions";
 import InformationStep from "./information-step";
 import QuestionnaireHeader from "./header";
 import QuestionSteps from "./question-steps";
+import { Button } from "@chakra-ui/react";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<
@@ -73,41 +74,49 @@ export default function Questionnaire() {
   const isFirstIndex = index === 0;
 
   return (
-    <div className="flex min-h-[600px] flex-col justify-between">
-      <div>
-        <QuestionnaireHeader
-          title={isFirstIndex ? "Information" : pageNames[index]!}
-          label={
-            isFirstIndex
-              ? "Please fill out your company information below"
-              : undefined
-          }
-        />
-        {/* if index is not 0, proceed with questions */}
-        {!isFirstIndex && (
-          <QuestionSteps
-            groupedQuestions={groupedQuestions}
-            pageNames={pageNames}
-            index={index}
-          />
-        )}
-        {/* if index is 0, show information step */}
-        {isFirstIndex && (
-          <InformationStep onChange={handleCompanyInformationChange} />
-        )}
+    <div className="flex max-h-[600px] min-h-[600px] flex-col justify-between  overflow-y-auto">
+      <QuestionnaireHeader
+        title={isFirstIndex ? "Information" : pageNames[index]!}
+        label={
+          isFirstIndex
+            ? "Please fill out your company information below"
+            : undefined
+        }
+      />
+      <div className="max-h-[600px] min-h-full overflow-y-auto">
+        <div className="mb-5">
+          {/* if index is not 0, proceed with questions */}
+          {!isFirstIndex && (
+            <QuestionSteps
+              groupedQuestions={groupedQuestions}
+              pageNames={pageNames}
+              index={index}
+            />
+          )}
+          {/* if index is 0, show information step */}
+          {isFirstIndex && (
+            <InformationStep onChange={handleCompanyInformationChange} />
+          )}
+        </div>
+        {/* if index is greater than 0 show back btn */}
+        {/* if index is not 3 show next btn*/}
       </div>
-      {/* if index is greater than 0 show back btn */}
-      {/* if index is not 3 show next btn*/}
-      <div className="mt-auto flex justify-between">
+      <div className="mt-5 flex justify-between">
         {index > 0 ? (
-          <Button onClick={() => index >= 1 && setIndex((index) => index - 1)}>
+          <Button
+            variant="outline"
+            onClick={() => index >= 1 && setIndex((index) => index - 1)}
+          >
             Back
           </Button>
         ) : (
           <div />
         )}
         {index !== 3 && (
-          <Button onClick={() => index < 3 && setIndex((index) => index + 1)}>
+          <Button
+            variant="outline"
+            onClick={() => index < 3 && setIndex((index) => index + 1)}
+          >
             Next
           </Button>
         )}

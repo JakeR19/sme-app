@@ -4,14 +4,14 @@ import { useState } from "react";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import { signIn } from "next-auth/react";
 
-import { Button } from "../ui/button";
 import LoadingSpinner from "./loading-spinner";
+import { Button } from "@chakra-ui/react";
 
 export default function LoginButton() {
   const [loading, setLoading] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="mt-2 flex flex-col space-y-2">
       {/* github login */}
       <Button
         disabled={loading}

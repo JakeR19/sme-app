@@ -1,4 +1,11 @@
 import { type QuestionsFetchReturnType } from "~/lib/types/questions";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from "@chakra-ui/react";
+import Question from "./question";
 
 export default function QuestionSteps({
   groupedQuestions,
@@ -12,18 +19,34 @@ export default function QuestionSteps({
   return (
     <div>
       {groupedQuestions[pageNames[index]!] && (
-        <div>
-          <h2>{pageNames[index]}</h2>
+        <div className="space-y-5">
           {Object.entries(groupedQuestions[pageNames[index]!]!).map(
             ([type, questions]) => (
-              <div key={type}>
-                <h3>{type}</h3>
-                <ul>
-                  {questions.map((question) => (
-                    <li key={question.id}>{question.title}</li>
-                  ))}
-                </ul>
-              </div>
+              <Accordion
+                allowMultiple
+                allowToggle
+                className="mb-5 rounded-lg"
+                key={type}
+              >
+                <AccordionItem
+                  className="rounded-lg border-l border-r"
+                  key={type}
+                >
+                  <div>
+                    <AccordionButton className="flex justify-between">
+                      <h3 className="font-semibold">{type}</h3>
+                      {questions.length}
+                    </AccordionButton>
+                    <AccordionPanel>
+                      <div className="space-y-2">
+                        {questions.map((question) => (
+                          <Question question={question} key={question.id} />
+                        ))}
+                      </div>
+                    </AccordionPanel>
+                  </div>
+                </AccordionItem>
+              </Accordion>
             ),
           )}
         </div>
