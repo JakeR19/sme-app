@@ -104,7 +104,6 @@ model Questionnaire {
     companyName String
     sector String
     
-
     userId String
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
