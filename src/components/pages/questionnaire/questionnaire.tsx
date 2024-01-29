@@ -45,6 +45,38 @@ export default function Questionnaire() {
     });
   }
 
+  // on change handler for the radio buttons
+  const handleChange = (questionId: string, value: string) => {
+    // check if answer already exists in state
+    const existingAnswerIndex = answers.findIndex(
+      (answer) => answer.questionId === questionId,
+    );
+
+    // if exists, update, else create new
+    if (existingAnswerIndex !== -1) {
+      const updatedAnswers = [...answers];
+      updatedAnswers[existingAnswerIndex] = {
+        answer: value,
+        weight: 0,
+        questionId,
+      };
+      setAnswers(updatedAnswers);
+    } else {
+      setAnswers([
+        ...answers,
+        {
+          answer: value,
+          weight: 0,
+          questionId,
+        },
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    console.log(answers);
+  }, [answers]);
+
   // this function will group the questions by the page and type
   // i.e. the output will look like this
   // { Data Assets:
@@ -88,6 +120,8 @@ export default function Questionnaire() {
           {/* if index is not 0, proceed with questions */}
           {!isFirstIndex && (
             <QuestionSteps
+              answers={answers}
+              handleChange={handleChange}
               groupedQuestions={groupedQuestions}
               pageNames={pageNames}
               index={index}
@@ -105,6 +139,7 @@ export default function Questionnaire() {
         {index > 0 ? (
           <Button
             variant="outline"
+            fontSize={"small"}
             onClick={() => index >= 1 && setIndex((index) => index - 1)}
           >
             Back
@@ -115,6 +150,7 @@ export default function Questionnaire() {
         {index !== 3 && (
           <Button
             variant="outline"
+            fontSize={"small"}
             onClick={() => index < 3 && setIndex((index) => index + 1)}
           >
             Next
