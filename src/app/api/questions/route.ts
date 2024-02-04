@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import { withSession } from "~/lib/auth.ts";
 import { db } from "~/server/db";
 
-export async function POST(request: Request) {
-  const data = (await request.json()) as { data: string };
-  return NextResponse.json({ message: "hello", data: data.data });
-}
+// export async function POST(request: Request) {
+//   const data = (await request.json()) as { data: string };
+//   return NextResponse.json({ message: "hello", data: data.data });
+// }
 
+// [GET] /api/questionnaire - get all questions
 export const GET = withSession(async () => {
   const questions = await db.question.findMany({
     select: {
@@ -21,4 +22,10 @@ export const GET = withSession(async () => {
     },
   });
   return NextResponse.json(questions);
+});
+
+// [POST] /api/questionnaire - create questionnaire
+export const POST = withSession(async ({ req }) => {
+  console.log(await req.json());
+  return NextResponse.json({});
 });

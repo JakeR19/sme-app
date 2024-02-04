@@ -25,7 +25,9 @@ export default function Questionnaire() {
   const [data, setData] = useState<QuestionsFetchReturnType[]>([]);
 
   useEffect(() => {
-    void fetch("/api/test")
+    void fetch("/api/questions", {
+      method: "GET",
+    })
       .then((res) => res.json())
       .then((data) => {
         setData(data as QuestionsFetchReturnType[]);
@@ -72,10 +74,6 @@ export default function Questionnaire() {
       ]);
     }
   };
-
-  useEffect(() => {
-    console.log(answers);
-  }, [answers]);
 
   // this function will group the questions by the page and type
   // i.e. the output will look like this
@@ -154,6 +152,21 @@ export default function Questionnaire() {
             onClick={() => index < 3 && setIndex((index) => index + 1)}
           >
             Next
+          </Button>
+        )}
+        {index === 3 && (
+          <Button
+            onClick={() => {
+              void fetch("/api/questions", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ test: "hello" }),
+              });
+            }}
+          >
+            test
           </Button>
         )}
       </div>
