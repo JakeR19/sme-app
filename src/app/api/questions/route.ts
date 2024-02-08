@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { withSession } from "~/lib/auth.ts";
+import { type SubmitQuestionnaireReqType } from "~/lib/types/questionnaire";
+
 import { db } from "~/server/db";
 
 // export async function POST(request: Request) {
@@ -24,8 +26,16 @@ export const GET = withSession(async () => {
   return NextResponse.json(questions);
 });
 
-// [POST] /api/questionnaire - create questionnaire
-export const POST = withSession(async ({ req }) => {
-  console.log(await req.json());
+// [POST] /api/questionnaire - submit questionnaire (company info and answers)
+export const POST = withSession(async ({ req, session }) => {
+  const { companyInformation, answers } =
+    (await req.json()) as SubmitQuestionnaireReqType;
+  const questionnaire = await db.questionnaire.create({
+    data: {
+      companyName: companyInformation.companyName,
+      sector: companyInformation.sector,
+      userId: session.user.id,
+    },
+  });
   return NextResponse.json({});
 });
