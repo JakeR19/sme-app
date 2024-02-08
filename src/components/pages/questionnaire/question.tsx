@@ -1,4 +1,5 @@
 import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import type { AnswerHandleChangeType, AnswersType } from "~/lib/types/answers";
 
 import { type QuestionsFetchReturnType } from "~/lib/types/questions";
 
@@ -8,13 +9,10 @@ export default function Question({
   answers,
 }: {
   question: QuestionsFetchReturnType;
-  handleChange: (questionId: string, value: string) => void;
-  answers: {
-    answer: string;
-    weight: number;
-    questionId: string;
-  }[];
+  handleChange: ({ ...params }: AnswerHandleChangeType) => void;
+  answers: AnswersType[];
 }) {
+  console.log({ question, answers });
   return (
     <div
       className="flex justify-between  rounded-md border px-4 py-2"
@@ -24,7 +22,16 @@ export default function Question({
         {question.title}
       </p>
       <RadioGroup
-        onChange={(value) => handleChange(question.id, value)}
+        onChange={(value) =>
+          handleChange({
+            questionId: question.id,
+            value,
+            questionWeight: question.questionWeight,
+            answerWeight: question[
+              (value.toLocaleLowerCase() + "Weight") as keyof typeof question
+            ] as number,
+          })
+        }
         className="my-auto items-center"
         value={answers.find((a) => a.questionId === question.id)?.answer ?? ""}
       >

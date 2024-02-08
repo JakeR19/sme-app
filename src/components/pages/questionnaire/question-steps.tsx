@@ -6,6 +6,7 @@ import {
   AccordionPanel,
 } from "@chakra-ui/react";
 import Question from "./question";
+import type { AnswerHandleChangeType, AnswersType } from "~/lib/types/answers";
 
 export default function QuestionSteps({
   groupedQuestions,
@@ -17,12 +18,8 @@ export default function QuestionSteps({
   groupedQuestions: Record<string, Record<string, QuestionsFetchReturnType[]>>;
   pageNames: string[];
   index: number;
-  handleChange: (questionId: string, value: string) => void;
-  answers: {
-    answer: string;
-    weight: number;
-    questionId: string;
-  }[];
+  handleChange: ({ ...params }: AnswerHandleChangeType) => void;
+  answers: AnswersType[];
 }) {
   return (
     <div>

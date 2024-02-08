@@ -7,23 +7,15 @@ import InformationStep from "./information-step";
 import QuestionnaireHeader from "./header";
 import QuestionSteps from "./question-steps";
 import QuestionnaireSteppers from "./questionnaire-steppers";
+import type { AnswerHandleChangeType, AnswersType } from "~/lib/types/answers";
 
 export default function Questionnaire() {
-  const [answers, setAnswers] = useState<
-    Array<{
-      answer: string;
-      weight: number;
-      questionId: string;
-    }>
-  >([]);
-
+  const [answers, setAnswers] = useState<Array<AnswersType>>([]);
   const [companyInformation, setCompanyInformation] = useState({
     companyName: "",
     sector: "",
   });
-
   const [index, setIndex] = useState<number>(0);
-
   const [data, setData] = useState<QuestionsFetchReturnType[]>([]);
 
   useEffect(() => {
@@ -38,8 +30,9 @@ export default function Questionnaire() {
 
   // get all possible page types, i.e. data assets and system assets
   // initialise first empty step for information step
-  const pageNames = [""].concat(
-    Array.from(new Set<string>(data.map((d) => d.page))),
+  const pageNames = useMemo(
+    () => [""].concat(Array.from(new Set<string>(data.map((d) => d.page)))),
+    [data],
   );
 
   function handleCompanyInformationChange(name: string, value: string) {
@@ -50,7 +43,12 @@ export default function Questionnaire() {
   }
 
   // on change handler for the radio buttons
-  const handleChange = (questionId: string, value: string) => {
+  const handleChange = ({
+    answerWeight,
+    questionId,
+    questionWeight,
+    value,
+  }: AnswerHandleChangeType) => {
     // check if answer already exists in state
     const existingAnswerIndex = answers.findIndex(
       (answer) => answer.questionId === questionId,
@@ -60,21 +58,33 @@ export default function Questionnaire() {
     if (existingAnswerIndex !== -1) {
       const updatedAnswers = [...answers];
       updatedAnswers[existingAnswerIndex] = {
-        answer: value,
-        weight: 0,
         questionId,
+        questionWeight,
+        answer: value,
+        answerWeight,
       };
       setAnswers(updatedAnswers);
     } else {
       setAnswers([
         ...answers,
         {
-          answer: value,
-          weight: 0,
           questionId,
+          questionWeight,
+          answer: value,
+          answerWeight,
         },
       ]);
     }
+  };
+
+  const submitQuestionnaire = () => {
+    void fetch("/api/questions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ companyInformation, answers }),
+    });
   };
 
   // this function will group the questions by the page and type
@@ -142,6 +152,7 @@ export default function Questionnaire() {
         </div>
       </div>
       <QuestionnaireSteppers
+        submitCallback={submitQuestionnaire}
         disabled={
           companyInformation.companyName === "" ||
           companyInformation.sector === ""

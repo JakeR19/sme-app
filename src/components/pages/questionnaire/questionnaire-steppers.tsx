@@ -5,10 +5,12 @@ export default function QuestionnaireSteppers({
   index,
   setIndex,
   disabled,
+  submitCallback,
 }: {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   disabled: boolean;
+  submitCallback: () => void;
 }) {
   return (
     <div
@@ -37,19 +39,7 @@ export default function QuestionnaireSteppers({
         </Button>
       )}
       {index === 3 && (
-        <Button
-          variant="outline"
-          fontSize={"small"}
-          onClick={() => {
-            void fetch("/api/questions", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ test: "hello" }),
-            });
-          }}
-        >
+        <Button variant="outline" fontSize={"small"} onClick={submitCallback}>
           Submit
         </Button>
       )}
