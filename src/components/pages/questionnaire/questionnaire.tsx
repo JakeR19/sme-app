@@ -6,7 +6,7 @@ import { type QuestionsFetchReturnType } from "~/lib/types/questions";
 import InformationStep from "./information-step";
 import QuestionnaireHeader from "./header";
 import QuestionSteps from "./question-steps";
-import { Button } from "@chakra-ui/react";
+import QuestionnaireSteppers from "./questionnaire-steppers";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<
@@ -16,10 +16,12 @@ export default function Questionnaire() {
       questionId: string;
     }>
   >([]);
+
   const [companyInformation, setCompanyInformation] = useState({
     companyName: "",
     sector: "",
   });
+
   const [index, setIndex] = useState<number>(0);
 
   const [data, setData] = useState<QuestionsFetchReturnType[]>([]);
@@ -103,6 +105,10 @@ export default function Questionnaire() {
 
   const isFirstIndex = index === 0;
 
+  useEffect(() => {
+    console.log(companyInformation);
+  }, [companyInformation]);
+
   return (
     <div className="flex flex-col justify-between overflow-y-auto">
       <div className="h-[78vh] max-h-[78vh] overflow-y-auto">
@@ -128,55 +134,25 @@ export default function Questionnaire() {
             )}
             {/* if index is 0, show information step */}
             {isFirstIndex && (
-              <InformationStep onChange={handleCompanyInformationChange} />
+              <InformationStep
+                companyNameValue={companyInformation.companyName}
+                companySectorValue={companyInformation.sector}
+                onChange={handleCompanyInformationChange}
+              />
             )}
           </div>
           {/* if index is greater than 0 show back btn */}
           {/* if index is not 3 show next btn*/}
         </div>
       </div>
-      <div
-        id="buttons"
-        className="mb-[50px] flex justify-between border-t pt-[10px]"
-      >
-        {index > 0 ? (
-          <Button
-            variant="outline"
-            fontSize={"small"}
-            onClick={() => index >= 1 && setIndex((index) => index - 1)}
-          >
-            Back
-          </Button>
-        ) : (
-          <div />
-        )}
-        {index !== 3 && (
-          <Button
-            variant="outline"
-            fontSize={"small"}
-            onClick={() => index < 3 && setIndex((index) => index + 1)}
-          >
-            Next
-          </Button>
-        )}
-        {index === 3 && (
-          <Button
-            variant="outline"
-            fontSize={"small"}
-            onClick={() => {
-              void fetch("/api/questions", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ test: "hello" }),
-              });
-            }}
-          >
-            test
-          </Button>
-        )}
-      </div>
+      <QuestionnaireSteppers
+        disabled={
+          companyInformation.companyName === "" ||
+          companyInformation.sector === ""
+        }
+        index={index}
+        setIndex={setIndex}
+      />
     </div>
   );
 }

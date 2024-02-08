@@ -9,7 +9,11 @@ import {
 
 export default function InformationStep({
   onChange,
+  companyNameValue,
+  companySectorValue,
 }: {
+  companyNameValue: string;
+  companySectorValue: string;
   onChange: (name: string, value: string) => void;
 }) {
   return (
@@ -18,6 +22,7 @@ export default function InformationStep({
         <div className="max-w-[300px] space-y-1">
           <p className="text-sm font-semibold">Company name</p>
           <Input
+            value={companyNameValue}
             focusBorderColor={"black"}
             onChange={(e) => onChange("companyName", e.target.value)}
             name="companyName"
@@ -28,6 +33,7 @@ export default function InformationStep({
         <div className="max-w-[300px] space-y-1">
           <p className="text-sm font-semibold">Sector</p>
           <Select
+            value={companySectorValue}
             name="sector"
             onValueChange={(value) => onChange("sector", value)}
           >
