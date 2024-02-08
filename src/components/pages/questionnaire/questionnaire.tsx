@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { type QuestionsFetchReturnType } from "~/lib/types/questions";
 import InformationStep from "./information-step";
@@ -103,15 +103,11 @@ export default function Questionnaire() {
     groupedQuestions[page]?.[type]!.push(question);
   });
 
-  const isFirstIndex = index === 0;
-
-  useEffect(() => {
-    console.log(companyInformation);
-  }, [companyInformation]);
+  const isFirstIndex = useMemo(() => index === 0, [index]);
 
   return (
     <div className="flex flex-col justify-between overflow-y-auto">
-      <div className="h-[78vh] max-h-[78vh] overflow-y-auto">
+      <div className="overflow-y-auto">
         <QuestionnaireHeader
           title={isFirstIndex ? "Information" : pageNames[index]!}
           label={
@@ -120,7 +116,7 @@ export default function Questionnaire() {
               : undefined
           }
         />
-        <div className="max-h-[600px] min-h-full overflow-y-auto">
+        <div className="max-h-[60vh] min-h-[60vh] overflow-y-auto">
           <div className="mb-5">
             {/* if index is not 0, proceed with questions */}
             {!isFirstIndex && (

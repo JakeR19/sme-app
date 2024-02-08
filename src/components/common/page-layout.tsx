@@ -26,7 +26,7 @@ export default async function PageLayout({
         </div>
       )}
 
-      <main className="mx-auto flex h-full w-full flex-col items-center gap-6 px-4 py-8 sm:px-6 sm:pt-12 lg:px-8">
+      <main className="mx-auto flex h-full w-full flex-col items-center gap-6 px-8 pt-12">
         <div
           style={{ maxWidth: customWidth + "px" }}
           className={cn("w-[90vw] lg:w-[60vw]", "flex flex-col gap-8")}

@@ -14,13 +14,12 @@ export default function QuestionnaireHeader({
   title: string;
 }) {
   return (
-    <div className="mb-10 w-full">
+    <div className="mb-10 h-[70px]  w-full items-center border-b">
       <div className="flex items-center">
         <h1 className="-mb-1 text-[30px] font-semibold">{title}</h1>
         <div className="-mb-[6px] ml-2">{icons[title]}</div>
       </div>
       {label && <p className="text-sm text-slate-500">{label}</p>}
-      <div className="mt-2 border-b border-slate-200" />
     </div>
   );
 }

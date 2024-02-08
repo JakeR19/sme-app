@@ -13,7 +13,7 @@ export default function QuestionnaireSteppers({
   return (
     <div
       id="buttons"
-      className="mb-[50px] flex justify-between border-t pt-[10px]"
+      className="flex items-center justify-between border-t pt-[10px]"
     >
       {index > 0 ? (
         <Button
