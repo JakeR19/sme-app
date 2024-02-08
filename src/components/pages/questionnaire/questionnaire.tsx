@@ -104,36 +104,41 @@ export default function Questionnaire() {
   const isFirstIndex = index === 0;
 
   return (
-    <div className="flex max-h-[600px] min-h-[600px] flex-col justify-between  overflow-y-auto">
-      <QuestionnaireHeader
-        title={isFirstIndex ? "Information" : pageNames[index]!}
-        label={
-          isFirstIndex
-            ? "Please fill out your company information below"
-            : undefined
-        }
-      />
-      <div className="max-h-[600px] min-h-full overflow-y-auto">
-        <div className="mb-5">
-          {/* if index is not 0, proceed with questions */}
-          {!isFirstIndex && (
-            <QuestionSteps
-              answers={answers}
-              handleChange={handleChange}
-              groupedQuestions={groupedQuestions}
-              pageNames={pageNames}
-              index={index}
-            />
-          )}
-          {/* if index is 0, show information step */}
-          {isFirstIndex && (
-            <InformationStep onChange={handleCompanyInformationChange} />
-          )}
+    <div className="flex flex-col justify-between overflow-y-auto">
+      <div className="h-[78vh] max-h-[78vh] overflow-y-auto">
+        <QuestionnaireHeader
+          title={isFirstIndex ? "Information" : pageNames[index]!}
+          label={
+            isFirstIndex
+              ? "Please fill out your company information below"
+              : undefined
+          }
+        />
+        <div className="max-h-[600px] min-h-full overflow-y-auto">
+          <div className="mb-5">
+            {/* if index is not 0, proceed with questions */}
+            {!isFirstIndex && (
+              <QuestionSteps
+                answers={answers}
+                handleChange={handleChange}
+                groupedQuestions={groupedQuestions}
+                pageNames={pageNames}
+                index={index}
+              />
+            )}
+            {/* if index is 0, show information step */}
+            {isFirstIndex && (
+              <InformationStep onChange={handleCompanyInformationChange} />
+            )}
+          </div>
+          {/* if index is greater than 0 show back btn */}
+          {/* if index is not 3 show next btn*/}
         </div>
-        {/* if index is greater than 0 show back btn */}
-        {/* if index is not 3 show next btn*/}
       </div>
-      <div className="mt-5 flex justify-between">
+      <div
+        id="buttons"
+        className="mb-[50px] flex justify-between border-t pt-[10px]"
+      >
         {index > 0 ? (
           <Button
             variant="outline"
@@ -156,6 +161,8 @@ export default function Questionnaire() {
         )}
         {index === 3 && (
           <Button
+            variant="outline"
+            fontSize={"small"}
             onClick={() => {
               void fetch("/api/questions", {
                 method: "POST",
