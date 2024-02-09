@@ -78,7 +78,7 @@ export default function Questionnaire() {
   };
 
   const submitQuestionnaire = () => {
-    void fetch("/api/questions", {
+    void fetch("/api/questionnaire", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
