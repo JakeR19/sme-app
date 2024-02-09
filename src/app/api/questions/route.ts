@@ -37,5 +37,16 @@ export const POST = withSession(async ({ req, session }) => {
       userId: session.user.id,
     },
   });
-  return NextResponse.json({});
+  if (questionnaire) {
+    await db.answer.createMany({
+      data: answers.map((answer) => {
+        return {
+          ...answer,
+          questionnaireId: questionnaire.id,
+          userId: session.user.id,
+        };
+      }),
+    });
+  }
+  return NextResponse.json({ questionnaire });
 });

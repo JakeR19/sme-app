@@ -82,7 +82,8 @@ model Question {
 model Answer {
     id String @id @default(cuid())
     answer String
-    weight Int
+    answerWeight Int
+    questionWeight Int
 
     // many to one relation
     // i.e. many answers are associated with one question
