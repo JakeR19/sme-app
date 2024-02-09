@@ -23,8 +23,8 @@ export default function Questionnaire() {
       method: "GET",
     })
       .then((res) => res.json())
-      .then((data) => {
-        setData(data as QuestionsFetchReturnType[]);
+      .then((data: QuestionsFetchReturnType[]) => {
+        setData(data);
       });
   }, []);
 

@@ -1,9 +1,10 @@
-import { FileText, Sliders, PcCase } from "lucide-react";
+import { FileText, Sliders, PcCase, MessageCircleQuestion } from "lucide-react";
 
 const icons: Record<string, React.ReactNode> = {
   "Data Assets": <FileText />,
   Controls: <Sliders />,
   "System Assets": <PcCase />,
+  "Your questionnaires": <MessageCircleQuestion />,
 };
 
 export default function QuestionnaireHeader({

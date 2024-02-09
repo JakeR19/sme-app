@@ -15,9 +15,7 @@ export const GET = withSession(async ({ session }) => {
           answers: true,
         },
       },
-      // inner join with answers
-      answers: true,
     },
   });
-  return NextResponse.json({ questionnaires });
+  return NextResponse.json(questionnaires);
 });
