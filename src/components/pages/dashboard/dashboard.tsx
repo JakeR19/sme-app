@@ -27,7 +27,9 @@ export default function DashboardList() {
   if (loading) {
     return (
       <Container>
-        <LoadingPage />
+        <div className="flex h-[84vh] flex-col items-center justify-center">
+          <LoadingPage />
+        </div>
       </Container>
     );
   }

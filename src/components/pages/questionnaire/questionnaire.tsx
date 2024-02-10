@@ -8,6 +8,8 @@ import QuestionnaireHeader from "./header";
 import QuestionSteps from "./question-steps";
 import QuestionnaireSteppers from "./questionnaire-steppers";
 import type { AnswerHandleChangeType, AnswersType } from "~/lib/types/answers";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<Array<AnswersType>>([]);
@@ -17,6 +19,7 @@ export default function Questionnaire() {
   });
   const [index, setIndex] = useState<number>(0);
   const [data, setData] = useState<QuestionsFetchReturnType[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     void fetch("/api/questions", {
@@ -84,6 +87,11 @@ export default function Questionnaire() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ companyInformation, answers }),
+    }).then(() => {
+      toast.success("Submitted questionnaire, redirecting...");
+      setTimeout(() => {
+        void router.push("/");
+      }, 1500);
     });
   };
 
@@ -126,7 +134,7 @@ export default function Questionnaire() {
               : undefined
           }
         />
-        <div className="max-h-[60vh] min-h-[60vh] overflow-y-auto">
+        <div className="max-h-[64vh] min-h-[64vh] overflow-y-auto">
           <div className="mb-5">
             {/* if index is not 0, proceed with questions */}
             {!isFirstIndex && (
