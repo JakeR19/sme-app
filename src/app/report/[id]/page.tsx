@@ -20,7 +20,7 @@ export default function SingleReportPage() {
         <p className="text-sm">Back</p>
       </Link>
       <Container>
-        <div className="grid h-[84vh] grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           <RiskScore />
           <ThreatChart />
           <ThreatLevel />
