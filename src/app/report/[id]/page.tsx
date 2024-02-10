@@ -20,6 +20,11 @@ export default function SingleReportPage() {
         <p className="text-sm">Back</p>
       </Link>
       <Container>
+        <div className="-mt-5 text-center">
+          <h1 className="my-2 text-xl font-semibold text-gray-700">
+            Company Name
+          </h1>
+        </div>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           <RiskScore />
           <ThreatChart />
