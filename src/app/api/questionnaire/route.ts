@@ -28,16 +28,3 @@ export const POST = withSession(async ({ req, session }) => {
   }
   return NextResponse.json({ questionnaire });
 });
-
-// [GET] /api/questionnaire - get specific questionnaire
-// params: { questionnaireId: string }
-export const GET = withSession(async ({ req, session }) => {
-  const { questionnaireId } = (await req.json()) as { questionnaireId: string };
-  const questionnaire = await db.questionnaire.findFirst({
-    where: {
-      userId: session.user.id,
-      id: questionnaireId,
-    },
-  });
-  return NextResponse.json({ questionnaire });
-});
