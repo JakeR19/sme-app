@@ -6,9 +6,9 @@ export default function RiskScore() {
   const percentage = score * 10;
 
   return (
-    <div className="rounded-lg border px-3 py-2 shadow-sm">
+    <div className="rounded-lg border px-3 py-2 shadow-sm lg:max-h-[35vh]">
       <h1 className="font-semibold text-gray-700">Risk Score</h1>
-      <div className="p-10">
+      <div className="mx-auto mt-2 flex h-[80%] w-[80%] items-center justify-center p-6">
         <CircularProgressbar
           value={percentage}
           text={`${score}/10`}
