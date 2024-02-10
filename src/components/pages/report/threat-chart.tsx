@@ -1,35 +1,32 @@
 import {
   BarChart,
   Bar,
-  Rectangle,
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
 const data = [
   {
     name: "Software",
-    uv: 10,
+    score: 10,
   },
   {
     name: "Hardware",
-    uv: 8,
+    score: 8,
   },
   {
     name: "Data",
-    uv: 10,
+    score: 10,
   },
   {
     name: "Personnel",
-    uv: 5,
+    score: 5,
   },
   {
     name: "Storage",
-    uv: 4,
+    score: 4,
   },
 ];
 
@@ -42,7 +39,7 @@ export default function ThreatChart() {
           data={data}
           margin={{
             top: 5,
-            right: 30,
+            right: 14,
             left: 20,
             bottom: 5,
           }}
@@ -50,9 +47,7 @@ export default function ThreatChart() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis fontSize={"10px"} interval={0} dataKey="name" />
           <YAxis fontSize={"12px"} width={2} />
-          <Tooltip />
-          {/* <Legend />   */}
-          <Bar dataKey="uv" fill="#82ca9d" />
+          <Bar dataKey="score" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
     </div>
