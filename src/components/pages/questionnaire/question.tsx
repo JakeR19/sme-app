@@ -12,7 +12,6 @@ export default function Question({
   handleChange: ({ ...params }: AnswerHandleChangeType) => void;
   answers: AnswersType[];
 }) {
-  console.log({ question, answers });
   return (
     <div
       className="flex justify-between  rounded-md border px-4 py-2"

@@ -19,6 +19,7 @@ export default function Questionnaire() {
   });
   const [index, setIndex] = useState<number>(0);
   const [data, setData] = useState<QuestionsFetchReturnType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -95,6 +96,32 @@ export default function Questionnaire() {
     });
   };
 
+  const getGPTLikelihoodValues = () => {
+    setLoading(true);
+    void fetch("/api/questions/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sector: companyInformation.sector,
+        questions: data.map((d) => {
+          return {
+            id: d.id,
+            title: d.title,
+          };
+        }),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTimeout(() => {
+          console.log(data);
+          setLoading(false);
+        }, 5000);
+      });
+  };
+
   // this function will group the questions by the page and type
   // i.e. the output will look like this
   // { Data Assets:
@@ -160,6 +187,7 @@ export default function Questionnaire() {
         </div>
       </div>
       <QuestionnaireSteppers
+        gptResponseCallback={getGPTLikelihoodValues}
         submitCallback={submitQuestionnaire}
         disabled={
           companyInformation.companyName === "" ||

@@ -6,11 +6,13 @@ export default function QuestionnaireSteppers({
   setIndex,
   disabled,
   submitCallback,
+  gptResponseCallback,
 }: {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   disabled: boolean;
   submitCallback: () => void;
+  gptResponseCallback: () => void;
 }) {
   return (
     <div
@@ -33,7 +35,12 @@ export default function QuestionnaireSteppers({
           variant="outline"
           fontSize={"small"}
           isDisabled={disabled}
-          onClick={() => index < 3 && setIndex((index) => index + 1)}
+          onClick={() => {
+            if (index === 0) {
+              gptResponseCallback();
+            }
+            index < 3 && setIndex((index) => index + 1);
+          }}
         >
           Next
         </Button>
