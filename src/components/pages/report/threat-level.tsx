@@ -1,16 +1,12 @@
 import GaugeComponent from "react-gauge-component";
 
-export default function RiskScore() {
+export default function ThreatLevel() {
   return (
     <div className="flex h-full flex-col rounded-lg border shadow-sm">
       <h1 className="ml-3 mt-2 font-semibold text-gray-700">Threat Level</h1>
       <div className="my-auto flex items-center justify-center">
         <GaugeComponent
           className="my-auto h-full w-full"
-          style={{
-            width: "500px",
-            height: "200px",
-          }}
           maxValue={100}
           value={60}
           arc={{
@@ -20,7 +16,7 @@ export default function RiskScore() {
             subArcs: [
               {
                 limit: 33,
-                color: "#EA4228",
+                color: "#5BE12C",
               },
               {
                 limit: 66,
@@ -28,7 +24,7 @@ export default function RiskScore() {
               },
               {
                 limit: 100,
-                color: "#5BE12C",
+                color: "#EA4228",
               },
             ],
           }}

@@ -18,7 +18,6 @@ export default function DashboardList() {
     })
       .then((res) => res.json())
       .then((data: AllQuestionnairesType[]) => {
-        console.log(data);
         setData(data);
         setLoading(false);
       });
@@ -42,9 +41,16 @@ export default function DashboardList() {
       />
       {data && data.length > 0 && (
         <div className="flex max-h-[70vh]  min-h-[70vh] flex-col gap-4 overflow-y-auto">
-          {data.map((question: AllQuestionnairesType) => (
-            <DashboardItem key={question.id} question={question} />
-          ))}
+          {data.map((question: AllQuestionnairesType, index) => {
+            const reversedIdx = data.length - 1 - index;
+            return (
+              <DashboardItem
+                index={reversedIdx + 1}
+                key={question.id}
+                question={question}
+              />
+            );
+          })}
         </div>
       )}
     </Container>

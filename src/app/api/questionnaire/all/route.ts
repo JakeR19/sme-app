@@ -8,6 +8,7 @@ export const GET = withSession(async ({ session }) => {
     where: {
       userId: session.user.id,
     },
+    orderBy: { createdAt: "desc" },
     include: {
       // include count of how many answers were provided
       _count: {

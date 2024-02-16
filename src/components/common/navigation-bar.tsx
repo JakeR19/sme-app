@@ -31,16 +31,16 @@ export default function NavigationBar({
           </Link>
         </div>
         <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
-          <div className="grid gap-1">
+          <div className="grid gap-2">
             {navigationMap.map(({ name, href }) => (
               <Link
                 key={name}
                 href={href}
                 className={cn(
-                  pathname === href ? "bg-slate-100" : "",
+                  pathname === href ? "border bg-gray-100 shadow-md" : "",
                   `flex items-center space-x-3 rounded-lg px-2`,
                   `py-1.5 transition-all duration-150 ease-in-out`,
-                  `hover:bg-slate-100 active:bg-slate-200`,
+                  `hover:bg-gray-100 active:bg-slate-200`,
                 )}
               >
                 <span className="text-sm font-medium">{name}</span>
