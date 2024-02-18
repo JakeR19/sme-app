@@ -7,4 +7,10 @@ export type QuestionsFetchReturnType = {
   yesWeight: number;
   partiallyWeight: number;
   noWeight: number;
+  likelihood?: number;
+};
+
+export type GPTLikelihoodResponseType = {
+  title: string;
+  likelihood: number;
 };

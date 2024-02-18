@@ -8,6 +8,7 @@ export type SubmitQuestionnaireReqType = {
     questionWeight: number;
     answer: string;
     answerWeight: number;
+    title: string;
   }>;
 };
 

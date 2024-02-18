@@ -36,7 +36,7 @@ export default function DashboardList() {
   return (
     <Container>
       <QuestionnaireHeader
-        label={`You have completed ${data.length} questionnaires`}
+        label={`You have completed ${data.length} questionnaires for your company.`}
         title="Your questionnaires"
       />
       {data && data.length > 0 && (

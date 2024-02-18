@@ -23,6 +23,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     URL: z.string(),
+    OPENAI_API_KEY: z.string(),
   },
 
   client: {
@@ -42,6 +43,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     URL: process.env.URL,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,

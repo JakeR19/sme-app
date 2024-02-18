@@ -2,7 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { type QuestionsFetchReturnType } from "~/lib/types/questions";
+import {
+  type GPTLikelihoodResponseType,
+  type QuestionsFetchReturnType,
+} from "~/lib/types/questions";
 import InformationStep from "./information-step";
 import QuestionnaireHeader from "./header";
 import QuestionSteps from "./question-steps";
@@ -10,6 +13,8 @@ import QuestionnaireSteppers from "./questionnaire-steppers";
 import type { AnswerHandleChangeType, AnswersType } from "~/lib/types/answers";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { LoadingPage } from "~/components/common/loading-spinner";
+import { riskCalculationAlgo } from "~/lib/utils";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<Array<AnswersType>>([]);
@@ -19,21 +24,29 @@ export default function Questionnaire() {
   });
   const [index, setIndex] = useState<number>(0);
   const [data, setData] = useState<QuestionsFetchReturnType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<"questions" | "ai" | null>(
+    "questions",
+  );
+  const [likelihoods, setLikelihoods] = useState<GPTLikelihoodResponseType[]>(
+    [],
+  );
+
   const router = useRouter();
 
   useEffect(() => {
+    // fetch all questions from db
     void fetch("/api/questions", {
       method: "GET",
     })
       .then((res) => res.json())
       .then((data: QuestionsFetchReturnType[]) => {
         setData(data);
+        setLoading(null);
       });
   }, []);
 
   // get all possible page types, i.e. data assets and system assets
-  // initialise first empty step for information step
+  // initialise first empty step for information step with [""]
   const pageNames = useMemo(
     () => [""].concat(Array.from(new Set<string>(data.map((d) => d.page)))),
     [data],
@@ -47,47 +60,55 @@ export default function Questionnaire() {
   }
 
   // on change handler for the radio buttons
-  const handleChange = ({
-    answerWeight,
-    questionId,
-    questionWeight,
-    value,
-  }: AnswerHandleChangeType) => {
+  const handleChange = ({ ...params }: AnswerHandleChangeType) => {
     // check if answer already exists in state
     const existingAnswerIndex = answers.findIndex(
-      (answer) => answer.questionId === questionId,
+      (answer) => answer.questionId === params.questionId,
     );
 
     // if exists, update, else create new
     if (existingAnswerIndex !== -1) {
       const updatedAnswers = [...answers];
       updatedAnswers[existingAnswerIndex] = {
-        questionId,
-        questionWeight,
-        answer: value,
-        answerWeight,
+        ...params,
+        answer: params.value,
       };
       setAnswers(updatedAnswers);
     } else {
       setAnswers([
         ...answers,
         {
-          questionId,
-          questionWeight,
-          answer: value,
-          answerWeight,
+          ...params,
+          answer: params.value,
         },
       ]);
     }
   };
 
   const submitQuestionnaire = () => {
+    // submit questionnaire api call
     void fetch("/api/questionnaire", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ companyInformation, answers }),
+      body: JSON.stringify({
+        companyInformation,
+        answers: answers.map((answer) => {
+          // find corresponding likelihood value
+          const likelihood =
+            likelihoods.find((l) => l.title === answer.title)?.likelihood ?? 0;
+          return {
+            ...answer,
+            // send answer along with calculation to api route
+            calculation: riskCalculationAlgo({
+              answerWeight: answer.answerWeight,
+              questionWeight: answer.questionWeight,
+              likelihood,
+            }),
+          };
+        }),
+      }),
     }).then(() => {
       toast.success("Submitted questionnaire, redirecting...");
       setTimeout(() => {
@@ -97,7 +118,8 @@ export default function Questionnaire() {
   };
 
   const getGPTLikelihoodValues = () => {
-    setLoading(true);
+    // call api to interface with chatgpt and
+    // get likelihood factor for each question
     void fetch("/api/questions/chat", {
       method: "POST",
       headers: {
@@ -105,20 +127,18 @@ export default function Questionnaire() {
       },
       body: JSON.stringify({
         sector: companyInformation.sector,
-        questions: data.map((d) => {
-          return {
-            id: d.id,
-            title: d.title,
-          };
-        }),
+        questions: data.map((d) => d.title),
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        setTimeout(() => {
-          console.log(data);
-          setLoading(false);
-        }, 5000);
+      .then((gptData) => {
+        // parse data from chatgpt into obj that can be manipulated
+        const parsedLikelihoods = JSON.parse(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+          gptData.choices[0].message.content,
+        ) as GPTLikelihoodResponseType[];
+        setLikelihoods(parsedLikelihoods);
+        setLoading(null);
       });
   };
 
@@ -136,11 +156,11 @@ export default function Questionnaire() {
 
   data.forEach((question) => {
     const { page, type } = question;
-    // if page doesnt exist
+    // if page doesnt exist initialise as new obj
     if (!groupedQuestions[page]) {
       groupedQuestions[page] = {};
     }
-    // if type doesnt exist on page
+    // if type doesnt exist on page initialise as new array
     if (!groupedQuestions[page]![type]) {
       groupedQuestions[page]![type] = [];
     }
@@ -148,6 +168,8 @@ export default function Questionnaire() {
     groupedQuestions[page]?.[type]!.push(question);
   });
 
+  // check if current page is index 0 (information step)
+  // better to make it as reusable var
   const isFirstIndex = useMemo(() => index === 0, [index]);
 
   return (
@@ -161,30 +183,39 @@ export default function Questionnaire() {
               : undefined
           }
         />
-        <div className="max-h-[64vh] min-h-[64vh] overflow-y-auto">
-          <div className="mb-5">
-            {/* if index is not 0, proceed with questions */}
-            {!isFirstIndex && (
-              <QuestionSteps
-                answers={answers}
-                handleChange={handleChange}
-                groupedQuestions={groupedQuestions}
-                pageNames={pageNames}
-                index={index}
-              />
-            )}
-            {/* if index is 0, show information step */}
-            {isFirstIndex && (
-              <InformationStep
-                companyNameValue={companyInformation.companyName}
-                companySectorValue={companyInformation.sector}
-                onChange={handleCompanyInformationChange}
-              />
-            )}
-          </div>
-          {/* if index is greater than 0 show back btn */}
-          {/* if index is not 3 show next btn*/}
-        </div>
+        <>
+          {loading === "questions" ? (
+            <div className="flex h-[64vh] flex-col items-center justify-center">
+              <LoadingPage />
+              <p className="mt-2 text-sm text-slate-600">
+                Fetching questions...
+              </p>
+            </div>
+          ) : (
+            <div className="max-h-[64vh] min-h-[64vh] overflow-y-auto">
+              <div className="mb-5">
+                {/* if index is not 0, proceed with questions */}
+                {!isFirstIndex && (
+                  <QuestionSteps
+                    answers={answers}
+                    handleChange={handleChange}
+                    groupedQuestions={groupedQuestions}
+                    pageNames={pageNames}
+                    index={index}
+                  />
+                )}
+                {/* if index is 0, show information step */}
+                {isFirstIndex && (
+                  <InformationStep
+                    companyNameValue={companyInformation.companyName}
+                    companySectorValue={companyInformation.sector}
+                    onChange={handleCompanyInformationChange}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+        </>
       </div>
       <QuestionnaireSteppers
         gptResponseCallback={getGPTLikelihoodValues}

@@ -25,6 +25,7 @@ export default function Question({
           handleChange({
             questionId: question.id,
             value,
+            title: question.title,
             questionWeight: question.questionWeight,
             answerWeight: question[
               (value.toLocaleLowerCase() + "Weight") as keyof typeof question
