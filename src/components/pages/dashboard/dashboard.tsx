@@ -6,6 +6,8 @@ import { LoadingPage } from "../../common/loading-spinner";
 import { type AllQuestionnairesType } from "~/lib/types/questionnaire";
 import QuestionnaireHeader from "../questionnaire/header";
 import DashboardItem from "./item";
+import Link from "next/link";
+import { Button } from "@chakra-ui/react";
 
 export default function DashboardList() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,11 +37,8 @@ export default function DashboardList() {
 
   return (
     <Container>
-      <QuestionnaireHeader
-        label={`You have completed ${data.length} questionnaires for your company.`}
-        title="Your questionnaires"
-      />
-      {data && data.length > 0 && (
+      <QuestionnaireHeader title="Your questionnaires" />
+      {data && data.length > 0 ? (
         <div className="flex max-h-[70vh]  min-h-[70vh] flex-col gap-4 overflow-y-auto">
           {data.map((question: AllQuestionnairesType, index) => {
             const reversedIdx = data.length - 1 - index;
@@ -52,7 +51,16 @@ export default function DashboardList() {
             );
           })}
         </div>
-      )}
+      ) : data.length === 0 ? (
+        <div className="flex h-[70vh] w-full flex-col items-center justify-center text-center">
+          <h1 className="-mt-[60px] text-xl font-semibold text-slate-600">
+            You have not completed any questionnaires.
+          </h1>
+          <Link href={"/questionnaire"} className="mt-4">
+            <Button size={"sm"}>Go to questionnaire</Button>
+          </Link>
+        </div>
+      ) : null}
     </Container>
   );
 }

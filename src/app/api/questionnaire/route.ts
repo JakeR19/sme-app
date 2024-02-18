@@ -9,6 +9,11 @@ export const POST = withSession(async ({ req, session }) => {
   const { companyInformation, answers } =
     (await req.json()) as SubmitQuestionnaireReqType;
   console.log({ companyInformation, answers });
+  console.log();
+  const calculationSum = answers.reduce((acc, value) => {
+    return acc + value.calculation;
+  }, 0);
+  console.log({ calculationSum });
   // const questionnaire = await db.questionnaire.create({
   //   data: {
   //     companyName: companyInformation.companyName,

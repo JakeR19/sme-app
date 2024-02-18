@@ -111,6 +111,7 @@ model Questionnaire {
 
     companyName String
     sector String
+    totalRiskRating Int
     
     userId String
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)

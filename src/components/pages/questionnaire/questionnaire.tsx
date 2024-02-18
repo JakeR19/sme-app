@@ -100,6 +100,7 @@ export default function Questionnaire() {
             likelihoods.find((l) => l.title === answer.title)?.likelihood ?? 0;
           return {
             ...answer,
+            likelihood,
             // send answer along with calculation to api route
             calculation: riskCalculationAlgo({
               answerWeight: answer.answerWeight,
@@ -128,6 +129,12 @@ export default function Questionnaire() {
       body: JSON.stringify({
         sector: companyInformation.sector,
         questions: data.map((d) => d.title),
+        // questions: data.map((d) => {
+        //   return {
+        //     id: d.id,
+        //     title: d.title,
+        //   };
+        // }),
       }),
     })
       .then((res) => res.json())

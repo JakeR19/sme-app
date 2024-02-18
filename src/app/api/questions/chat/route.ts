@@ -12,7 +12,7 @@ const openai = new OpenAI({
 export const POST = withSession(async ({ req }) => {
   const { sector, questions } = (await req.json()) as {
     sector: string;
-    questions: string[];
+    questions: { id: string; title: string }[];
   };
 
   const gptResponse = await openai.chat.completions.create({
@@ -28,6 +28,5 @@ export const POST = withSession(async ({ req }) => {
       },
     ],
   });
-
   return NextResponse.json(gptResponse);
 });
