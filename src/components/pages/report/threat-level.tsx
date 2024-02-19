@@ -1,29 +1,32 @@
 import GaugeComponent from "react-gauge-component";
+import { getRiskRatingRange } from "~/lib/utils";
 
-export default function ThreatLevel() {
+export default function ThreatLevel({ riskRating }: { riskRating: number }) {
+  const range = getRiskRatingRange(riskRating);
+
   return (
     <div className="flex h-full flex-col rounded-lg border shadow-sm">
       <h1 className="ml-3 mt-2 font-semibold text-gray-700">Threat Level</h1>
       <div className="my-auto flex items-center justify-center">
         <GaugeComponent
           className="my-auto h-full w-full"
-          maxValue={100}
-          value={60}
+          maxValue={10}
+          value={range}
           arc={{
             gradient: false,
             width: 0.2,
             padding: 0.03,
             subArcs: [
               {
-                limit: 33,
+                limit: 3,
                 color: "#5BE12C",
               },
               {
-                limit: 66,
+                limit: 6,
                 color: "#F5CD19",
               },
               {
-                limit: 100,
+                limit: 10,
                 color: "#EA4228",
               },
             ],

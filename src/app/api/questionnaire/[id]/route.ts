@@ -4,7 +4,8 @@ import { NextResponse } from "next/server";
 import { withSession } from "~/lib/auth.ts";
 import { db } from "~/server/db";
 
-// params: { questionnaireId: string }
+// [GET] /api/questionnaire/[id] - get specific questionnaire by id
+// params: { id: string }
 export const GET = withSession(async ({ session, params }) => {
   const { id } = params as { id: string };
   const questionnaire = await db.questionnaire.findFirst({
@@ -21,6 +22,5 @@ export const GET = withSession(async ({ session, params }) => {
       },
     },
   });
-  console.log(questionnaire);
   return NextResponse.json(questionnaire);
 });

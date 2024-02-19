@@ -1,9 +1,10 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { getRiskRatingRange } from "~/lib/utils";
 
-export default function RiskScore() {
-  const score = 7.5;
-  const percentage = score * 10;
+export default function RiskScore({ riskRating }: { riskRating: number }) {
+  const range = getRiskRatingRange(riskRating);
+  const percentage = range * 10;
 
   return (
     <div className="rounded-lg border px-3 py-2 shadow-sm lg:max-h-[35vh]">
@@ -11,7 +12,7 @@ export default function RiskScore() {
       <div className="mx-auto mt-2 flex h-[80%] w-[80%] items-center justify-center p-6">
         <CircularProgressbar
           value={percentage}
-          text={`${score}/10`}
+          text={`${range}/10`}
           strokeWidth={5}
           styles={
             (buildStyles({

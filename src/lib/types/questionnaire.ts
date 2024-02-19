@@ -11,6 +11,7 @@ export type SubmitQuestionnaireReqType = {
     likelihood: number;
     answerWeight: number;
     title: string;
+    threat: string;
   }>;
 };
 
@@ -20,6 +21,7 @@ export type AllQuestionnairesType = {
   sector: string;
   userId: string;
   createdAt: string;
+  totalRiskRating: number;
   _count: {
     answers: number;
   };

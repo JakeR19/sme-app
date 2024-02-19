@@ -56,10 +56,10 @@ export default function SingleReportPage() {
             </h1>
           </div>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-            <RiskScore />
+            <RiskScore riskRating={data.totalRiskRating} />
             <ThreatChart />
-            <ThreatLevel />
-            <RiskHistory />
+            <ThreatLevel riskRating={data.totalRiskRating} />
+            <RiskHistory id={id} />
             <Tips />
           </div>
         </Container>

@@ -15,6 +15,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoadingPage } from "~/components/common/loading-spinner";
 import { riskCalculationAlgo } from "~/lib/utils";
+import { tempLikelihoods } from "~/lib/constants";
+import { Button } from "@chakra-ui/react";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<Array<AnswersType>>([]);
@@ -27,9 +29,8 @@ export default function Questionnaire() {
   const [loading, setLoading] = useState<"questions" | "ai" | null>(
     "questions",
   );
-  const [likelihoods, setLikelihoods] = useState<GPTLikelihoodResponseType[]>(
-    [],
-  );
+  const [likelihoods, setLikelihoods] =
+    useState<GPTLikelihoodResponseType[]>(tempLikelihoods);
 
   const router = useRouter();
 
@@ -96,17 +97,22 @@ export default function Questionnaire() {
         companyInformation,
         answers: answers.map((answer) => {
           // find corresponding likelihood value
-          const likelihood =
-            likelihoods.find((l) => l.title === answer.title)?.likelihood ?? 0;
+          const likelihood = likelihoods.find(
+            (l) => l.id === answer.questionId,
+          );
+          const { title, ...rest } = answer;
           return {
-            ...answer,
-            likelihood,
+            ...rest,
+            likelihood: likelihood?.likelihood,
+            threat: likelihood?.threat,
             // send answer along with calculation to api route
-            calculation: riskCalculationAlgo({
-              answerWeight: answer.answerWeight,
-              questionWeight: answer.questionWeight,
-              likelihood,
-            }),
+            calculation: Math.round(
+              riskCalculationAlgo({
+                answerWeight: answer.answerWeight,
+                questionWeight: answer.questionWeight,
+                likelihood: likelihood?.likelihood ?? 0,
+              }),
+            ),
           };
         }),
       }),
@@ -128,13 +134,12 @@ export default function Questionnaire() {
       },
       body: JSON.stringify({
         sector: companyInformation.sector,
-        questions: data.map((d) => d.title),
-        // questions: data.map((d) => {
-        //   return {
-        //     id: d.id,
-        //     title: d.title,
-        //   };
-        // }),
+        questions: data.map((d) => {
+          return {
+            id: d.id,
+            title: d.title,
+          };
+        }),
       }),
     })
       .then((res) => res.json())
@@ -144,6 +149,7 @@ export default function Questionnaire() {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
           gptData.choices[0].message.content,
         ) as GPTLikelihoodResponseType[];
+        console.log(parsedLikelihoods);
         setLikelihoods(parsedLikelihoods);
         setLoading(null);
       });
@@ -182,6 +188,27 @@ export default function Questionnaire() {
   return (
     <div className="flex flex-col justify-between overflow-y-auto">
       <div className="overflow-y-auto">
+        <Button
+          onClick={() => {
+            setCompanyInformation({
+              companyName: "Microsoft",
+              sector: "Retail",
+            });
+            setAnswers(
+              data.map((question) => {
+                return {
+                  answer: "no",
+                  answerWeight: question.noWeight,
+                  questionId: question.id,
+                  questionWeight: question.questionWeight,
+                  title: question.title,
+                };
+              }),
+            );
+          }}
+        >
+          test
+        </Button>
         <QuestionnaireHeader
           title={isFirstIndex ? "Information" : pageNames[index]!}
           label={
@@ -225,7 +252,8 @@ export default function Questionnaire() {
         </>
       </div>
       <QuestionnaireSteppers
-        gptResponseCallback={getGPTLikelihoodValues}
+        gptResponseCallback={() => null}
+        // gptResponseCallback={getGPTLikelihoodValues}
         submitCallback={submitQuestionnaire}
         disabled={
           companyInformation.companyName === "" ||

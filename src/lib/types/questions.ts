@@ -11,6 +11,7 @@ export type QuestionsFetchReturnType = {
 };
 
 export type GPTLikelihoodResponseType = {
-  title: string;
+  id: string;
+  threat: string;
   likelihood: number;
 };
