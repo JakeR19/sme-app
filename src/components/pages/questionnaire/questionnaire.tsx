@@ -116,12 +116,14 @@ export default function Questionnaire() {
           };
         }),
       }),
-    }).then(() => {
-      toast.success("Submitted questionnaire, redirecting...");
-      setTimeout(() => {
-        void router.push("/");
-      }, 1500);
-    });
+    })
+      .then((res) => res.json())
+      .then((data: { id: string; createdAt: Date }) => {
+        toast.success("Submitted questionnaire, redirecting...");
+        setTimeout(() => {
+          void router.push(`/report/${data.id}`);
+        }, 1500);
+      });
   };
 
   const getGPTLikelihoodValues = () => {

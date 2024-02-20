@@ -37,7 +37,7 @@ export default function NavigationBar({
                 key={name}
                 href={href}
                 className={cn(
-                  pathname === href ? "border bg-gray-100 shadow-md" : "",
+                  pathname === href ? "border bg-gray-100 shadow-sm" : "",
                   `flex items-center space-x-3 rounded-lg px-2`,
                   `py-1.5 transition-all duration-150 ease-in-out`,
                   `hover:bg-gray-100 active:bg-slate-200`,

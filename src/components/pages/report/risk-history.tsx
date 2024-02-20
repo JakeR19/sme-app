@@ -29,7 +29,7 @@ export default function RiskHistory({ id }: { id: string }) {
   }, [id]);
 
   return (
-    <div className="col-span-1 max-h-[45vh] rounded-lg border px-3 py-2 shadow-sm md:col-span-2">
+    <div className="col-span-1 max-h-[48vh] rounded-lg border px-3 py-2 shadow-sm md:col-span-2">
       <div className="flex items-center">
         <h1 className="font-semibold text-gray-700">Risk History</h1>
         <p className="ml-1 mt-[3px] text-xs text-slate-600">

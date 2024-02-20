@@ -1,7 +1,5 @@
 "use client";
 
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Container from "~/components/common/container";
@@ -43,18 +41,9 @@ export default function SingleReportPage() {
   }
 
   return (
-    <>
-      <Link href="/" className="-my-[26px] flex items-center text-gray-500">
-        <ChevronLeft size={18} />
-        <p className="text-sm">Back</p>
-      </Link>
+    <div className="-mt-4">
       {data && (
         <Container>
-          <div className="-mt-5 text-center">
-            <h1 className="my-2 text-xl font-semibold text-gray-700">
-              {data.companyName}
-            </h1>
-          </div>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
             <RiskScore riskRating={data.totalRiskRating} />
             <ThreatChart />
@@ -64,6 +53,6 @@ export default function SingleReportPage() {
           </div>
         </Container>
       )}
-    </>
+    </div>
   );
 }

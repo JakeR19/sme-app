@@ -1,7 +1,6 @@
 import { Tooltip } from "@chakra-ui/react";
 import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 import Link from "next/link";
-import { useMemo } from "react";
 import { type AllQuestionnairesType } from "~/lib/types/questionnaire";
 import { getPercentageDifference, getRiskRatingRange } from "~/lib/utils";
 
@@ -53,7 +52,7 @@ export default function DashboardItem({
           borderColor="gray.300"
           borderRadius={"md"}
           color="gray.800"
-          label="Difference from previous questionnaire"
+          label="Risk difference from previous questionnaire"
         >
           <div className="ml-5 rounded-md font-semibold shadow-sm">
             <DifferencePill difference={difference} />

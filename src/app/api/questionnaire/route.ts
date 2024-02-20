@@ -40,5 +40,5 @@ export const POST = withSession(async ({ req, session }) => {
       }),
     });
   }
-  return NextResponse.json({});
+  return NextResponse.json(questionnaire);
 });

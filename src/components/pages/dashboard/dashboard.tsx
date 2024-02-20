@@ -39,7 +39,7 @@ export default function DashboardList() {
     <Container>
       <QuestionnaireHeader title="Your questionnaires" />
       {data && data.length > 0 ? (
-        <div className="flex max-h-[70vh]  min-h-[70vh] flex-col gap-4 overflow-y-auto">
+        <div className="flex max-h-[70vh] min-h-[70vh] flex-col gap-4 overflow-y-auto">
           {data.map((question: AllQuestionnairesType, index) => {
             const reversedIdx = data.length - 1 - index;
             const prev = data[index + 1];
