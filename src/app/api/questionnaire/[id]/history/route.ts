@@ -15,6 +15,7 @@ export const GET = withSession(async ({ session, params }) => {
           })
           .then((row) => row?.createdAt),
       },
+      userId: session.user.id,
     },
     select: {
       id: true,
