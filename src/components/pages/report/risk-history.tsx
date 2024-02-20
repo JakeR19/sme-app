@@ -30,7 +30,12 @@ export default function RiskHistory({ id }: { id: string }) {
 
   return (
     <div className="col-span-1 max-h-[45vh] rounded-lg border px-3 py-2 shadow-sm md:col-span-2">
-      <h1 className="font-semibold text-gray-700">Risk History</h1>
+      <div className="flex items-center">
+        <h1 className="font-semibold text-gray-700">Risk History</h1>
+        <p className="ml-1 mt-[3px] text-xs text-slate-600">
+          You have {historyData.length} total scores.
+        </p>
+      </div>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}

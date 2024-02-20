@@ -42,8 +42,11 @@ export default function DashboardList() {
         <div className="flex max-h-[70vh]  min-h-[70vh] flex-col gap-4 overflow-y-auto">
           {data.map((question: AllQuestionnairesType, index) => {
             const reversedIdx = data.length - 1 - index;
+            const prev = data[index + 1];
+
             return (
               <DashboardItem
+                prevRating={prev?.totalRiskRating}
                 index={reversedIdx + 1}
                 key={question.id}
                 question={question}

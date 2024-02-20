@@ -197,8 +197,8 @@ export default function Questionnaire() {
             setAnswers(
               data.map((question) => {
                 return {
-                  answer: "no",
-                  answerWeight: question.noWeight,
+                  answer: "yes",
+                  answerWeight: question.yesWeight,
                   questionId: question.id,
                   questionWeight: question.questionWeight,
                   title: question.title,

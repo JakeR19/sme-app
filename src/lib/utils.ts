@@ -40,3 +40,10 @@ export function getRiskRatingRange(num: number) {
   // Number if out of range
   return 0;
 }
+
+export function getPercentageDifference(
+  newNum: number,
+  oldNum: number,
+): number {
+  return ((newNum - oldNum) / oldNum) * 100;
+}
