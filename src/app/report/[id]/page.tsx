@@ -24,7 +24,6 @@ export default function SingleReportPage() {
     })
       .then((res) => res.json())
       .then((data: SingleQuestionnaireType) => {
-        console.log(data);
         setData(data);
         setLoading(false);
       });
@@ -44,6 +43,7 @@ export default function SingleReportPage() {
     <div className="-mt-4">
       {data && (
         <Container>
+          {/* render all charts in grid */}
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
             <RiskScore riskRating={data.totalRiskRating} />
             <ThreatChart />

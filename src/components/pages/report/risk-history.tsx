@@ -18,6 +18,7 @@ type RiskHistoryType = {
 
 export default function RiskHistory({ id }: { id: string }) {
   const [historyData, setHistoryData] = useState<RiskHistoryType[]>([]);
+  // fetch historical data
   useEffect(() => {
     void fetch(`/api/questionnaire/${id}/history`, {
       method: "GET",

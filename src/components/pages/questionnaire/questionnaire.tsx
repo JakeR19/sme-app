@@ -53,6 +53,7 @@ export default function Questionnaire() {
     [data],
   );
 
+  // change handler for company information
   function handleCompanyInformationChange(name: string, value: string) {
     setCompanyInformation({
       ...companyInformation,
@@ -100,6 +101,7 @@ export default function Questionnaire() {
           const likelihood = likelihoods.find(
             (l) => l.id === answer.questionId,
           );
+          // destructure title to separate from answer obj
           const { title, ...rest } = answer;
           return {
             ...rest,
@@ -151,7 +153,6 @@ export default function Questionnaire() {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
           gptData.choices[0].message.content,
         ) as GPTLikelihoodResponseType[];
-        console.log(parsedLikelihoods);
         setLikelihoods(parsedLikelihoods);
         setLoading(null);
       });

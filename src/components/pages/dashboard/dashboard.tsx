@@ -38,12 +38,14 @@ export default function DashboardList() {
   return (
     <Container>
       <QuestionnaireHeader title="Your questionnaires" />
+      {/* if there is data render list, else render call to action */}
       {data && data.length > 0 ? (
         <div className="flex max-h-[70vh] min-h-[70vh] flex-col gap-4 overflow-y-auto">
           {data.map((question: AllQuestionnairesType, index) => {
+            // reverse the index so that newest item is highest index
             const reversedIdx = data.length - 1 - index;
+            // get previous questionnaire
             const prev = data[index + 1];
-
             return (
               <DashboardItem
                 prevRating={prev?.totalRiskRating}

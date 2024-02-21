@@ -13,6 +13,7 @@ export default function DashboardItem({
   index: number;
   prevRating?: number;
 }) {
+  // difference between current rating and previous rating
   const difference =
     prevRating &&
     getPercentageDifference(

@@ -27,7 +27,7 @@ export default function QuestionSteps({
         <div className="space-y-5">
           {Object.entries(groupedQuestions[pageNames[index]!]!).map(
             ([type, questions]) => {
-              // count how many questions have been answers per group
+              // count how many questions have been answered per group
               const questionCount = questions.filter((question) =>
                 answers.some((answer) => answer.questionId === question.id),
               ).length;

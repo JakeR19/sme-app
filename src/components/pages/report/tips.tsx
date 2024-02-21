@@ -15,19 +15,6 @@ export default function Tips() {
     <div className="rounded-lg border px-3 py-2 shadow-sm">
       <h1 className="font-semibold text-gray-700">AI Tips</h1>
       <div className="space-y-1">
-        {/* {Array(5)
-          .fill(
-            "Try to secure your credentials by using two factor authentication.",
-          )
-          .map((tip, index) => (
-            <li
-              key={index}
-              className="flex space-x-1 rounded-md border px-2 py-1 text-center text-sm text-gray-700"
-            >
-              <p className="text-gray-400">#{index + 1} </p>
-              <p>{tip}</p>
-            </li>
-          ))} */}
         {Object.keys(tips).map((tip, index) => (
           <div className="rounded-md border p-[6px]" key={index}>
             <h1 className="text-xs font-semibold">{tip}</h1>

@@ -5,7 +5,7 @@ import { Card, CardBody, Heading } from "@chakra-ui/react";
 
 export default function LoginCard() {
   return (
-    <div className="flexp mx-5 mx-auto mt-40 items-center justify-center">
+    <div className="flexp mx-5 mx-auto items-center justify-center">
       <Card className={cn("w-[400px] bg-slate-100/30 p-5")}>
         <Heading>Login</Heading>
         <p>Log into your SME account</p>

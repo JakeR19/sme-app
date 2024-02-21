@@ -37,6 +37,7 @@ export default function NavigationBar({
                 key={name}
                 href={href}
                 className={cn(
+                  // if current url equals to pathname in nav map make it apparant
                   pathname === href ? "border bg-gray-100 shadow-sm" : "",
                   `flex items-center space-x-3 rounded-lg px-2`,
                   `py-1.5 transition-all duration-150 ease-in-out`,

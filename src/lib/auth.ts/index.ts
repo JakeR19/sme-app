@@ -1,7 +1,5 @@
 import { getServerAuthSession } from "~/server/auth";
 
-// api request wrapper, makes sure users are
-// authenticated before calling api's for questions/answer
 export interface Session {
   user: {
     email: string;
@@ -25,6 +23,8 @@ type WithSessionType = ({
   session: Session;
 }) => Promise<Response>;
 
+// api request wrapper that wraps each api call, makes sure users are
+// authenticated before calling api's for questions/answer
 export const withSession =
   (handler: WithSessionType) =>
   async (req: Request, { params }: { params: Record<string, string> }) => {

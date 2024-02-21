@@ -8,10 +8,9 @@ interface LayoutProps {
   customWidth?: string;
 }
 
-export default async function PageLayout({
-  children,
-  customWidth = "1000",
-}: LayoutProps) {
+export default async function PageLayout({ children }: LayoutProps) {
+  // get current logged in user session
+  // if exists we use it to render the nav bar
   const session = await getServerAuthSession();
 
   return (
@@ -28,7 +27,6 @@ export default async function PageLayout({
 
       <main className="mx-auto flex h-screen w-full flex-col items-center gap-6 overflow-y-auto bg-gray-100/50 px-8">
         <div
-          // style={{ maxWidth: customWidth + "px" }}
           className={cn(
             "my-auto w-[90vw] max-w-[1400px] lg:w-[80vw] lg:max-w-[1400px]",
             "flex flex-col",

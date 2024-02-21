@@ -19,6 +19,7 @@ export default function Question({
     >
       <p className="my-auto max-w-[60%] items-center text-sm">
         {question.title}
+        {question.questionWeight}
       </p>
       <RadioGroup
         onChange={(value) =>
@@ -37,13 +38,13 @@ export default function Question({
       >
         <Stack direction="row">
           <Radio value="yes">
-            <p className="text-sm">Yes</p>
+            <p className="text-sm">Yes{question.yesWeight}</p>
           </Radio>
           <Radio value="partially">
-            <p className="text-sm">Partially</p>
+            <p className="text-sm">Partially{question.partiallyWeight}</p>
           </Radio>
           <Radio value="no">
-            <p className="text-sm">No</p>
+            <p className="text-sm">No{question.noWeight}</p>
           </Radio>
         </Stack>
       </RadioGroup>
