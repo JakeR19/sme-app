@@ -120,8 +120,21 @@ model Questionnaire {
     createdAt DateTime @default(now())
 
     answers Answer[]
+    tips ReportTips[]
 
     @@index([userId])
 }
 
+model ReportTips {
+    id String @id @default(cuid())
 
+    threat String
+    text String
+
+    questionnaireId String
+    questionnaire Questionnaire @relation(fields: [questionnaireId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+
+    @@index([questionnaireId])
+}

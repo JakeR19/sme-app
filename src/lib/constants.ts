@@ -1,7 +1,7 @@
 export const chatSystemInput = (questions: string, arrLength: number) =>
   `For the following security questions: ${questions}, Assign a threat from these 5 common threat: (Data Breaches, Insider Threats, Compliance Violations,
  Phishing Attacks and Ransomware Attacks) that matches each question and the likelihood of it occuring for a company based in the sector that the user provides in their prompt. 
- The likelihood should be a number from 0-1 (low to high). Output in plain JSON format ONLY (no json backtick tag at the beginning or end)
+ The likelihood should be a number from 0-1 (low to high, one inclusive). Output in plain JSON format ONLY (no json backtick tag at the beginning or end)
  as an array of objects with the following structure: { id: string, threat: string, likelihood: number }, where id corresponds to the id of the question and likelihood is its
  corresponding likelihood and threat is its corresponding threat. Make sure the question in the JSON is written exactly as provided. 
  Make sure the length of the array matches the amount of questions provided, no more, no less. There are ${arrLength} questions so the output 

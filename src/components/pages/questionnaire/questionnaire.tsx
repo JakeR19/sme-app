@@ -32,6 +32,9 @@ export default function Questionnaire() {
   const [likelihoods, setLikelihoods] =
     useState<GPTLikelihoodResponseType[]>(tempLikelihoods);
 
+  // check to see if gpt api request has begun
+  // prevents refiring of api request if user decides to step back to first step
+  const [hasStartedGPTFetch, setHasStartGPTFetch] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -131,31 +134,34 @@ export default function Questionnaire() {
   const getGPTLikelihoodValues = () => {
     // call api to interface with chatgpt and
     // get likelihood factor for each question
-    void fetch("/api/questions/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sector: companyInformation.sector,
-        questions: data.map((d) => {
-          return {
-            id: d.id,
-            title: d.title,
-          };
+    if (!hasStartedGPTFetch) {
+      setHasStartGPTFetch(true);
+      void fetch("/api/questions/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sector: companyInformation.sector,
+          questions: data.map((d) => {
+            return {
+              id: d.id,
+              title: d.title,
+            };
+          }),
         }),
-      }),
-    })
-      .then((res) => res.json())
-      .then((gptData) => {
-        // parse data from chatgpt into obj that can be manipulated
-        const parsedLikelihoods = JSON.parse(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-          gptData.choices[0].message.content,
-        ) as GPTLikelihoodResponseType[];
-        setLikelihoods(parsedLikelihoods);
-        setLoading(null);
-      });
+      })
+        .then((res) => res.json())
+        .then((gptData) => {
+          // parse data from chatgpt into obj that can be manipulated
+          const parsedLikelihoods = JSON.parse(
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+            gptData.choices[0].message.content,
+          ) as GPTLikelihoodResponseType[];
+          setLikelihoods(parsedLikelihoods);
+          setLoading(null);
+        });
+    }
   };
 
   // this function will group the questions by the page and type
