@@ -49,7 +49,7 @@ export default function SingleReportPage() {
             <ThreatChart />
             <ThreatLevel riskRating={data.totalRiskRating} />
             <RiskHistory id={id} />
-            <Tips />
+            <Tips id={id} />
           </div>
         </Container>
       )}
