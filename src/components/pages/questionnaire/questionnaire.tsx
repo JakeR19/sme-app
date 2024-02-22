@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -26,12 +27,12 @@ export default function Questionnaire() {
   });
   const [index, setIndex] = useState<number>(0);
   const [data, setData] = useState<QuestionsFetchReturnType[]>([]);
-  const [loading, setLoading] = useState<"questions" | "ai" | null>(
+  const [loading, setLoading] = useState<"questions" | "ai" | "submit" | null>(
     "questions",
   );
   const [likelihoods, setLikelihoods] =
     useState<GPTLikelihoodResponseType[]>(tempLikelihoods);
-
+  const [threats, setThreats] = useState<string[]>([]);
   // check to see if gpt api request has begun
   // prevents refiring of api request if user decides to step back to first step
   const [hasStartedGPTFetch, setHasStartGPTFetch] = useState<boolean>(false);
@@ -92,6 +93,7 @@ export default function Questionnaire() {
 
   const submitQuestionnaire = () => {
     // submit questionnaire api call
+    setLoading("submit");
     void fetch("/api/questionnaire", {
       method: "POST",
       headers: {
@@ -99,6 +101,7 @@ export default function Questionnaire() {
       },
       body: JSON.stringify({
         companyInformation,
+        threats,
         answers: answers.map((answer) => {
           // find corresponding likelihood value
           const likelihood = likelihoods.find(
@@ -124,6 +127,7 @@ export default function Questionnaire() {
     })
       .then((res) => res.json())
       .then((data: { id: string; createdAt: Date }) => {
+        setLoading(null);
         toast.success("Submitted questionnaire, redirecting...");
         setTimeout(() => {
           void router.push(`/report/${data.id}`);
@@ -152,12 +156,16 @@ export default function Questionnaire() {
         }),
       })
         .then((res) => res.json())
-        .then((gptData) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((gptData: any) => {
           // parse data from chatgpt into obj that can be manipulated
+          console.log(gptData);
           const parsedLikelihoods = JSON.parse(
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-            gptData.choices[0].message.content,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
+            gptData.gptResponse.choices[0].message.content,
           ) as GPTLikelihoodResponseType[];
+          const threats = gptData.parsedThreats as string[];
+          setThreats(threats);
           setLikelihoods(parsedLikelihoods);
           setLoading(null);
         });
@@ -197,7 +205,7 @@ export default function Questionnaire() {
   return (
     <div className="flex flex-col justify-between overflow-y-auto">
       <div className="overflow-y-auto">
-        <Button
+        {/* <Button
           onClick={() => {
             setCompanyInformation({
               companyName: "Microsoft",
@@ -217,7 +225,7 @@ export default function Questionnaire() {
           }}
         >
           test
-        </Button>
+        </Button> */}
         <QuestionnaireHeader
           title={isFirstIndex ? "Information" : pageNames[index]!}
           label={
@@ -261,8 +269,9 @@ export default function Questionnaire() {
         </>
       </div>
       <QuestionnaireSteppers
-        gptResponseCallback={() => null}
-        // gptResponseCallback={getGPTLikelihoodValues}
+        isLoading={loading === "submit"}
+        // gptResponseCallback={() => null}
+        gptResponseCallback={getGPTLikelihoodValues}
         submitCallback={submitQuestionnaire}
         disabled={
           companyInformation.companyName === "" ||

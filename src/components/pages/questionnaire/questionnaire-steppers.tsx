@@ -7,12 +7,14 @@ export default function QuestionnaireSteppers({
   disabled,
   submitCallback,
   gptResponseCallback,
+  isLoading,
 }: {
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
   disabled: boolean;
   submitCallback: () => void;
   gptResponseCallback: () => void;
+  isLoading: boolean;
 }) {
   return (
     <div
@@ -46,7 +48,12 @@ export default function QuestionnaireSteppers({
         </Button>
       )}
       {index === 3 && (
-        <Button variant="outline" fontSize={"small"} onClick={submitCallback}>
+        <Button
+          isLoading={isLoading}
+          variant="outline"
+          fontSize={"small"}
+          onClick={submitCallback}
+        >
           Submit
         </Button>
       )}

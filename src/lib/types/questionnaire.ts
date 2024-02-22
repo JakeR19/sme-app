@@ -13,6 +13,8 @@ export type SubmitQuestionnaireReqType = {
     title: string;
     threat: string;
   }>;
+  sector?: string;
+  threats: string[];
 };
 
 export type AllQuestionnairesType = {
