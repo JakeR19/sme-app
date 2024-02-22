@@ -4,7 +4,7 @@ import { db } from "~/server/db";
 
 // [GET] /api/questionnaire/[id]/tips - get ai tips for questionnaire from db
 // params: { id: string }
-export const GET = withSession(async ({ session, params }) => {
+export const GET = withSession(async ({ params }) => {
   const { id } = params as { id: string };
   const tips = await db.reportTips.findMany({
     where: {

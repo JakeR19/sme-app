@@ -39,7 +39,7 @@ export function getRiskRatingRange(num: number) {
     }
   }
   // Number if out of range
-  return 0;
+  return 1;
 }
 
 export function getPercentageDifference(

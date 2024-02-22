@@ -205,7 +205,7 @@ export default function Questionnaire() {
   return (
     <div className="flex flex-col justify-between overflow-y-auto">
       <div className="overflow-y-auto">
-        {/* <Button
+        <Button
           onClick={() => {
             setCompanyInformation({
               companyName: "Microsoft",
@@ -225,7 +225,7 @@ export default function Questionnaire() {
           }}
         >
           test
-        </Button> */}
+        </Button>
         <QuestionnaireHeader
           title={isFirstIndex ? "Information" : pageNames[index]!}
           label={

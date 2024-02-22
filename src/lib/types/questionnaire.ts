@@ -42,4 +42,5 @@ export type Answer = {
   userId: string;
   questionnaireId: string;
   createdAt: string;
+  threat?: string;
 };

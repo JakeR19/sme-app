@@ -46,7 +46,7 @@ export default function SingleReportPage() {
           {/* render all charts in grid */}
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
             <RiskScore riskRating={data.totalRiskRating} />
-            <ThreatChart />
+            <ThreatChart answers={data.answers} />
             <ThreatLevel riskRating={data.totalRiskRating} />
             <RiskHistory id={id} />
             <Tips id={id} />

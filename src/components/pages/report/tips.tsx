@@ -6,6 +6,8 @@ import LoadingSpinner from "~/components/common/loading-spinner";
 export default function Tips({ id }: { id: string }) {
   const [tips, setTips] = useState<{ threat: string; text: string }[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // fetch ai tips from api route
   useEffect(() => {
     void fetch(`/api/questionnaire/${id}/tips`, {
       method: "GET",
@@ -17,7 +19,7 @@ export default function Tips({ id }: { id: string }) {
       });
   }, [id]);
   return (
-    <div className="rounded-lg border px-3 py-2 shadow-sm">
+    <div className="max-h-[53vh] rounded-lg border px-3 py-2 shadow-sm">
       <h1 className="font-semibold text-gray-700">AI Tips</h1>
       <div className="h-full">
         {isLoading && (

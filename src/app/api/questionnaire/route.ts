@@ -49,10 +49,12 @@ export const POST = withSession(async ({ req, session }) => {
     });
     if (tipsResponse) {
       const tips = String(tipsResponse.choices[0]?.message.content);
+
       const parsedTips = JSON.parse(tips) as {
         threat: string;
         text: string;
       }[];
+
       await db.reportTips.createMany({
         data: parsedTips.map((tip) => {
           return {
