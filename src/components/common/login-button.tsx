@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BsGithub, BsGoogle } from "react-icons/bs";
+import { BsGithub } from "react-icons/bs";
 import { signIn } from "next-auth/react";
 
 import LoadingSpinner from "./loading-spinner";
@@ -28,25 +28,6 @@ export default function LoginButton() {
           <>
             <BsGithub className="mr-2" />
             GitHub
-          </>
-        )}
-      </Button>
-      {/* google login */}
-      <Button
-        disabled={loading}
-        onClick={() => {
-          setLoading(true);
-          void signIn("google", { callbackUrl: "/" });
-        }}
-        variant={"outline"}
-        className="w-full"
-      >
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <>
-            <BsGoogle className="mr-2" />
-            Google
           </>
         )}
       </Button>
