@@ -57,12 +57,23 @@ export default function DashboardList() {
           })}
         </div>
       ) : data.length === 0 ? (
+        // show text if user has not completed any questionnaires
         <div className="flex h-[70vh] w-full flex-col items-center justify-center text-center">
           <h1 className="-mt-[60px] text-xl font-semibold text-slate-600">
             You have not completed any questionnaires.
           </h1>
           <Link href={"/questionnaire"} className="mt-4">
-            <Button size={"sm"}>Go to questionnaire</Button>
+            <Button
+              _hover={{
+                bgColor: "gray.700",
+              }}
+              size="sm"
+              bgColor={"#000000"}
+              color="white"
+              fontSize={"small"}
+            >
+              Go to questionnaire
+            </Button>
           </Link>
         </div>
       ) : null}

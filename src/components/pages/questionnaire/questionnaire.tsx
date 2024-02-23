@@ -17,7 +17,6 @@ import { useRouter } from "next/navigation";
 import { LoadingPage } from "~/components/common/loading-spinner";
 import { riskCalculationAlgo } from "~/lib/utils";
 import { tempLikelihoods } from "~/lib/constants";
-import { Button } from "@chakra-ui/react";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<Array<AnswersType>>([]);

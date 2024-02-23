@@ -13,7 +13,7 @@ export default function RiskScore({ riskRating }: { riskRating: number }) {
         <CircularProgressbar
           value={percentage}
           text={`${range}/10`}
-          strokeWidth={5}
+          strokeWidth={10}
           styles={
             (buildStyles({
               pathColor: `#fffff0`,
