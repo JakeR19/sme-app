@@ -30,7 +30,7 @@ export default function Tips({ id }: { id: string }) {
         {!isLoading && tips.length > 0 && (
           <div className="space-y-1">
             {tips.map((tip, index) => (
-              <div className="rounded-md border p-[6px]" key={index}>
+              <div className="rounded-md border p-[6px] shadow-sm" key={index}>
                 <h1 className="text-xs font-semibold">{tip.threat}</h1>
                 <p className="text-xs">{tip.text}</p>
               </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Bot, Grid, MessageCircleQuestion } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "~/lib/utils";
@@ -13,12 +14,19 @@ export default function NavigationBar({
 
   const navigationMap = [
     {
+      icon: <Grid size={18} />,
       name: "Dashboard",
       href: "/",
     },
     {
+      icon: <MessageCircleQuestion size={18} />,
       name: "Questionnaire",
       href: "/questionnaire",
+    },
+    {
+      icon: <Bot size={18} />,
+      name: "AI Chat",
+      href: "/chat",
     },
   ];
 
@@ -32,7 +40,7 @@ export default function NavigationBar({
         </div>
         <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
           <div className="grid gap-2">
-            {navigationMap.map(({ name, href }) => (
+            {navigationMap.map(({ name, href, icon }) => (
               <Link
                 key={name}
                 href={href}
@@ -44,6 +52,7 @@ export default function NavigationBar({
                   `hover:bg-gray-100 active:bg-slate-200`,
                 )}
               >
+                <div>{icon}</div>
                 <span className="text-sm font-medium">{name}</span>
               </Link>
             ))}

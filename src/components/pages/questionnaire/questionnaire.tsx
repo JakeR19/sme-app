@@ -159,7 +159,6 @@ export default function Questionnaire() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then((gptData: any) => {
           // parse data from chatgpt into obj that can be manipulated
-          console.log(gptData);
           const parsedLikelihoods = JSON.parse(
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
             gptData.gptResponse.choices[0].message.content,
@@ -205,27 +204,6 @@ export default function Questionnaire() {
   return (
     <div className="flex flex-col justify-between overflow-y-auto">
       <div className="overflow-y-auto">
-        <Button
-          onClick={() => {
-            setCompanyInformation({
-              companyName: "Microsoft",
-              sector: "Retail",
-            });
-            setAnswers(
-              data.map((question) => {
-                return {
-                  answer: "yes",
-                  answerWeight: question.yesWeight,
-                  questionId: question.id,
-                  questionWeight: question.questionWeight,
-                  title: question.title,
-                };
-              }),
-            );
-          }}
-        >
-          test
-        </Button>
         <QuestionnaireHeader
           title={isFirstIndex ? "Information" : pageNames[index]!}
           label={

@@ -23,7 +23,11 @@ export default function QuestionnaireSteppers({
     >
       {index > 0 ? (
         <Button
-          variant="outline"
+          _hover={{
+            bgColor: "gray.700",
+          }}
+          bgColor={"#000000"}
+          color="white"
           fontSize={"small"}
           onClick={() => index >= 1 && setIndex((index) => index - 1)}
         >
@@ -34,7 +38,11 @@ export default function QuestionnaireSteppers({
       )}
       {index !== 3 && (
         <Button
-          variant="outline"
+          _hover={{
+            bgColor: "gray.700",
+          }}
+          bgColor={"#000000"}
+          color="white"
           fontSize={"small"}
           isDisabled={disabled}
           onClick={() => {
@@ -49,8 +57,12 @@ export default function QuestionnaireSteppers({
       )}
       {index === 3 && (
         <Button
+          _hover={{
+            bgColor: "gray.700",
+          }}
+          bgColor={"#000000"}
+          color="white"
           isLoading={isLoading}
-          variant="outline"
           fontSize={"small"}
           onClick={submitCallback}
         >

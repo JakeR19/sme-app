@@ -4,6 +4,7 @@ import {
   PcCase,
   MessageCircleQuestion,
   BookOpenText,
+  Bot,
 } from "lucide-react";
 
 const icons: Record<string, React.ReactNode> = {
@@ -12,6 +13,7 @@ const icons: Record<string, React.ReactNode> = {
   "System Assets": <PcCase />,
   "Your questionnaires": <MessageCircleQuestion />,
   Information: <BookOpenText />,
+  "AI Chat": <Bot />,
 };
 
 export default function QuestionnaireHeader({
@@ -22,7 +24,7 @@ export default function QuestionnaireHeader({
   title: string;
 }) {
   return (
-    <div className="mb-10 h-[70px]  w-full items-center border-b">
+    <div className="mb-5 h-[70px]  w-full items-center border-b">
       <div className="flex items-center">
         <h1 className="-mb-1 text-[30px] font-semibold">{title}</h1>
         <div className="-mb-[6px] ml-2">{icons[title]}</div>

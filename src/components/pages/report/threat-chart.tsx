@@ -3,34 +3,10 @@ import {
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
 import { type Answer } from "~/lib/types/questionnaire";
-
-const data = [
-  {
-    name: "Software",
-    score: 10,
-  },
-  {
-    name: "Hardware",
-    score: 8,
-  },
-  {
-    name: "Data",
-    score: 10,
-  },
-  {
-    name: "Personnel",
-    score: 5,
-  },
-  {
-    name: "Storage",
-    score: 4,
-  },
-];
 
 export default function ThreatChart({ answers }: { answers: Answer[] }) {
   // get number of occurrences for each threat in the questionnaire answers
