@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoadingPage } from "~/components/common/loading-spinner";
 import { riskCalculationAlgo } from "~/lib/utils";
-import { tempLikelihoods } from "~/lib/constants";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<Array<AnswersType>>([]);
@@ -29,8 +28,9 @@ export default function Questionnaire() {
   const [loading, setLoading] = useState<"questions" | "ai" | "submit" | null>(
     "questions",
   );
-  const [likelihoods, setLikelihoods] =
-    useState<GPTLikelihoodResponseType[]>(tempLikelihoods);
+  const [likelihoods, setLikelihoods] = useState<GPTLikelihoodResponseType[]>(
+    [],
+  );
   const [threats, setThreats] = useState<string[]>([]);
   // check to see if gpt api request has begun
   // prevents refiring of api request if user decides to step back to first step

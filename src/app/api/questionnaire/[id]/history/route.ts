@@ -9,6 +9,8 @@ export const GET = withSession(async ({ session, params }) => {
   const history = await db.questionnaire.findMany({
     where: {
       createdAt: {
+        // specify that we get risk history from specific point i.e.
+        // current questionnaire and all before it, but not newer ones
         lte: await db.questionnaire
           .findFirst({
             where: { id },

@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// algorithm used to calculate risk for user submitted questionnaire
 export function riskCalculationAlgo({
   questionWeight,
   answerWeight,
@@ -32,13 +33,14 @@ export function getRiskRatingRange(num: number) {
     [2093, 2300], // 10
   ];
 
+  // loop through each range and check whether num falls in between x range
   for (let i = 0; i < ranges.length; i++) {
     const [min, max] = ranges[i] as [number, number];
     if (num >= min && num <= max) {
       return i + 1;
     }
   }
-  // Number if out of range
+  // return 1 if out of range
   return 1;
 }
 

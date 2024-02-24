@@ -20,6 +20,8 @@ export const POST = withSession(async ({ req, session }) => {
   const calculationSum = answers.reduce((acc, value) => {
     return acc + value.calculation;
   }, 0);
+
+  // create questionnaire
   const questionnaire = await db.questionnaire.create({
     data: {
       companyName: companyInformation.companyName,
@@ -32,6 +34,7 @@ export const POST = withSession(async ({ req, session }) => {
       createdAt: true,
     },
   });
+
   if (questionnaire) {
     // get tips from gpt and insert into report tips model, attached to the questionnaire by id
     const tipsResponse = await openai.chat.completions.create({
@@ -47,9 +50,10 @@ export const POST = withSession(async ({ req, session }) => {
         },
       ],
     });
+    // if we get a valid response from openai
     if (tipsResponse) {
+      // parse tips into json object
       const tips = String(tipsResponse.choices[0]?.message.content);
-
       const parsedTips = JSON.parse(tips) as {
         threat: string;
         text: string;
@@ -65,6 +69,7 @@ export const POST = withSession(async ({ req, session }) => {
         }),
       });
     }
+    // create answers and associate with questionnaire by id
     await db.answer.createMany({
       data: answers.map((answer) => {
         // delete leftover "value" property from radio handleChange

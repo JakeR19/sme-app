@@ -18,6 +18,7 @@ declare module "next-auth" {
   }
 }
 
+// next auth boilerplate
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, user }) => ({

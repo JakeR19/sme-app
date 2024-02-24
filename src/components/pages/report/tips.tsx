@@ -18,6 +18,7 @@ export default function Tips({ id }: { id: string }) {
         setIsLoading(false);
       });
   }, [id]);
+
   return (
     <div className="max-h-[50vh] rounded-lg border px-3 py-2 shadow-sm">
       <h1 className="font-semibold text-gray-700">AI Tips</h1>

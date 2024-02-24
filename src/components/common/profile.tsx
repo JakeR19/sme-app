@@ -10,12 +10,14 @@ export default async function Profile() {
 
   return (
     <div className="flex w-full items-center justify-between">
+      {/* if session exists we render the current users avatar and logout button */}
       {session ? (
         <>
           <Avatar session={session} />
           <LogoutButton />
         </>
       ) : (
+        // else we show login button
         <div className="mx-auto my-2 flex text-center">
           <Link href="/login">
             <div>Login</div>

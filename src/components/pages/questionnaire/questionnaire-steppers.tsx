@@ -21,6 +21,7 @@ export default function QuestionnaireSteppers({
       id="buttons"
       className="flex items-center justify-between border-t pt-[10px]"
     >
+      {/* if current step is greater than index 0 show back button */}
       {index > 0 ? (
         <Button
           _hover={{
@@ -36,6 +37,7 @@ export default function QuestionnaireSteppers({
       ) : (
         <div />
       )}
+      {/* if current step is not index 3 show next button*/}
       {index !== 3 && (
         <Button
           _hover={{
@@ -55,6 +57,7 @@ export default function QuestionnaireSteppers({
           Next
         </Button>
       )}
+      {/* if index 3 show submit button */}
       {index === 3 && (
         <Button
           _hover={{

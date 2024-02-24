@@ -13,6 +13,7 @@ export default function DashboardList() {
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<AllQuestionnairesType[]>([]);
 
+  // fetch all questionnaires for current user
   useEffect(() => {
     setLoading(true);
     void fetch("/api/questionnaire/all", {
@@ -45,6 +46,7 @@ export default function DashboardList() {
             // reverse the index so that newest item is highest index
             const reversedIdx = data.length - 1 - index;
             // get previous questionnaire
+            // used to get difference between rating scores
             const prev = data[index + 1];
             return (
               <DashboardItem

@@ -15,6 +15,7 @@ export const POST = withSession(async ({ req }) => {
     questions: { id: string; title: string }[];
   };
 
+  // call openai chat api to get common threats for specific sector
   const threatsResponse = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
@@ -30,10 +31,11 @@ export const POST = withSession(async ({ req }) => {
       },
     ],
   });
+  // retrieve threats and parse into json object
   const threats = String(threatsResponse.choices[0]?.message.content);
   const parsedThreats = JSON.parse(threats) as string[];
-  console.log("chat", { threats });
-  console.log("chat", { parsedThreats });
+
+  // if threats are present we can then assign threats and likelihoods to each answer
   if (parsedThreats.length > 0) {
     const gptResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -54,5 +56,6 @@ export const POST = withSession(async ({ req }) => {
     });
     return NextResponse.json({ gptResponse, parsedThreats });
   }
+
   return NextResponse.json({});
 });
