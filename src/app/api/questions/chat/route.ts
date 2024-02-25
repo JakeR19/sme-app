@@ -4,12 +4,14 @@ import OpenAI from "openai";
 import { env } from "~/env";
 import { chatSystemInput } from "~/lib/constants";
 
+export const runtime = "edge";
+
 const openai = new OpenAI({
   apiKey: env.OPENAI_API_KEY,
 });
 
 // [POST] /api/questionnaire/chat - get weights/likelihood from gpt
-export const POST = withSession(async ({ req }) => {
+export async function POST(req: Request) {
   const { sector, questions } = (await req.json()) as {
     sector: string;
     questions: { id: string; title: string }[];
@@ -58,4 +60,4 @@ export const POST = withSession(async ({ req }) => {
   }
 
   return NextResponse.json({});
-});
+}
