@@ -1,21 +1,16 @@
 import { NextResponse } from "next/server";
-import { withSession } from "~/lib/auth.ts";
 import OpenAI from "openai";
 import { env } from "~/env";
-import { chatSystemInput } from "~/lib/constants";
+import { withSession } from "~/lib/auth.ts";
 
 const openai = new OpenAI({
   apiKey: env.OPENAI_API_KEY,
 });
 
-// [POST] /api/questionnaire/chat - get weights/likelihood from gpt
 export const POST = withSession(async ({ req }) => {
-  const { sector, questions } = (await req.json()) as {
+  const { sector } = (await req.json()) as {
     sector: string;
-    questions: { id: string; title: string }[];
   };
-
-  // call openai chat api to get common threats for specific sector
   const threatsResponse = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
@@ -31,31 +26,7 @@ export const POST = withSession(async ({ req }) => {
       },
     ],
   });
-  // retrieve threats and parse into json object
   const threats = String(threatsResponse.choices[0]?.message.content);
   const parsedThreats = JSON.parse(threats) as string[];
-
-  // if threats are present we can then assign threats and likelihoods to each answer
-  if (parsedThreats.length > 0) {
-    const gptResponse = await openai.chat.completions.create({
-      model: "gpt-4",
-      messages: [
-        {
-          role: "system",
-          content: chatSystemInput(
-            JSON.stringify(questions),
-            questions.length,
-            parsedThreats.join(", "),
-          ),
-        },
-        {
-          role: "user",
-          content: `Provide me the likelihood values for the ${sector} sector`,
-        },
-      ],
-    });
-    return NextResponse.json({ gptResponse, parsedThreats });
-  }
-
-  return NextResponse.json({});
+  return NextResponse.json(parsedThreats);
 });
