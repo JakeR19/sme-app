@@ -33,7 +33,7 @@ export const env = createEnv({
     GITHUB_ID: process.env.GITHUB_ID,
     GITHUB_SECRET: process.env.GITHUB_SECRET,
     URL: process.env.URL,
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
