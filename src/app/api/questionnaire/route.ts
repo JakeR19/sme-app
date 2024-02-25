@@ -71,13 +71,14 @@ export const POST = withSession(async ({ req, session }) => {
     }
     // create answers and associate with questionnaire by id
     await db.answer.createMany({
-      data: answers.slice(0, 2).map((answer) => {
+      data: answers.map((answer) => {
         // delete leftover "value" property from radio handleChange
         if ("value" in answer) {
           delete answer.value;
         }
         return {
           ...answer,
+          threat: answer.threat ?? "",
           questionnaireId: questionnaire.id,
           userId: session.user.id,
         };
