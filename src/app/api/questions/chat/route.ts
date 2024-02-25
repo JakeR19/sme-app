@@ -8,6 +8,8 @@ const openai = new OpenAI({
   apiKey: env.OPENAI_API_KEY,
 });
 
+export const runtime = "edge";
+
 // [POST] /api/questionnaire/chat - get weights/likelihood from gpt
 export const POST = withSession(async ({ req }) => {
   const { sector, questions } = (await req.json()) as {
