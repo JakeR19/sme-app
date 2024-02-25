@@ -38,7 +38,7 @@ export const POST = withSession(async ({ req }) => {
   // if threats are present we can then assign threats and likelihoods to each answer
   if (parsedThreats.length > 0) {
     const gptResponse = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
