@@ -27,7 +27,9 @@ export default function SingleReportPage() {
     // function to convert div to canvas and download as jpeg
     const container = document.getElementById("reportContainer");
     if (container) {
-      const canvas = await html2canvas(container);
+      const canvas = await html2canvas(container, {
+        scale: 2,
+      });
       const dataURL = canvas.toDataURL("image/jpg");
       const link = document.createElement("a");
 

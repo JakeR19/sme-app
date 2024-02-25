@@ -122,11 +122,13 @@ export default function AIChatPage() {
               />
             </div>
             <div className="mt-2 flex items-center space-x-2">
+              {/* refresh chat */}
               {startedChat && (
                 <Button onClick={resetChat}>
                   <RefreshCcw className="mr-1" /> Restart
                 </Button>
               )}
+              {/* submit question */}
               <Button
                 type="submit"
                 _hover={{
@@ -140,6 +142,7 @@ export default function AIChatPage() {
               </Button>
             </div>
           </form>
+          {/* if started chat show question at top */}
           {startedChat && (
             <p className="text-center text-sm font-semibold">
               {chosenQuestion}
@@ -147,7 +150,7 @@ export default function AIChatPage() {
           )}
           <div
             id="chatDiv"
-            className="h-[400px] max-h-[300px] space-y-2 overflow-y-auto rounded-md border bg-gray-100 p-5"
+            className="max-h-[38vh] space-y-2 overflow-y-auto rounded-md border bg-gray-100 p-5"
           >
             {formattedMessages.map((m) => (
               <div key={m.id}>
