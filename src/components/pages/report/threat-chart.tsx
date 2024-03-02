@@ -24,7 +24,6 @@ export default function ThreatChart({ answers }: { answers: Answer[] }) {
     counts,
   }));
 
-  console.log({ result });
   return (
     <div className="max-h-[35vh] rounded-lg border px-3 py-2 shadow-sm">
       <h1 className="font-semibold text-gray-700">Threat Occurrences</h1>
