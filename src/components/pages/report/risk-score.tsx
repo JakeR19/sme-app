@@ -1,4 +1,4 @@
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getRiskRatingRange } from "~/lib/utils";
 

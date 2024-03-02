@@ -25,6 +25,7 @@ type WithSessionType = ({
 
 // api request wrapper that wraps each api call, makes sure users are
 // authenticated before calling api's for questions/answer
+// NOTE: have to call apis like so `export const GET = withSession(async () => {`
 export const withSession =
   (handler: WithSessionType) =>
   async (req: Request, { params }: { params: Record<string, string> }) => {
