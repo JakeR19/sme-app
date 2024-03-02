@@ -69,7 +69,7 @@ export default function RiskHistory({ id }: { id: string }) {
             strokeWidth={"3px"}
             type="monotone"
             dataKey="score"
-            stroke="#82ca9d"
+            stroke="#e67e22"
           />
         </LineChart>
       </ResponsiveContainer>

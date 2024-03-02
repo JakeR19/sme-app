@@ -16,13 +16,6 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoadingPage } from "~/components/common/loading-spinner";
 import { riskCalculationAlgo } from "~/lib/utils";
-import OpenAI from "openai";
-import { chatSystemInput } from "~/lib/constants";
-
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<Array<AnswersType>>([]);
@@ -175,61 +168,6 @@ export default function Questionnaire() {
           setLoading(null);
         });
     }
-
-    // if (!hasStartedGPTFetch) {
-    //   const questions = data.map((d) => {
-    //     return {
-    //       id: d.id,
-    //       title: d.title,
-    //     };
-    //   });
-    //   setHasStartGPTFetch(true);
-    //   const threatsResponse = await openai.chat.completions.create({
-    //     model: "gpt-3.5-turbo",
-    //     messages: [
-    //       {
-    //         role: "system",
-    //         content: `For a company based in the sector provided in the user prompt, compose a list of the 5 most common cybersecurity threats they may face.
-    //         The threats should be a maximum of 2-3 words. The list HAS to have 5 threats, not more than 5 and not less than 5, 5 in total.
-    //         Your output should be an array of the threats in plain JSON format ONLY (no json backtick tag at the beginning or end)`,
-    //       },
-    //       {
-    //         role: "user",
-    //         content: `Provide me the 5 most common threats for a company in the ${companyInformation.sector} sector`,
-    //       },
-    //     ],
-    //   });
-    //   const threats = String(threatsResponse.choices[0]?.message.content);
-    //   const parsedThreats = JSON.parse(threats) as string[];
-    //   if (parsedThreats.length > 0) {
-    //     const gptResponse = await openai.chat.completions.create({
-    //       model: "gpt-3.5-turbo",
-    //       messages: [
-    //         {
-    //           role: "system",
-    //           content: chatSystemInput(
-    //             JSON.stringify(questions),
-    //             questions.length,
-    //             parsedThreats.join(", "),
-    //           ),
-    //         },
-    //         {
-    //           role: "user",
-    //           content: `Provide me the likelihood values for the ${companyInformation.sector} sector`,
-    //         },
-    //       ],
-    //     });
-    //     console.log({ gptResponse, parsedThreats });
-    //     const parsedLikelihoods = JSON.parse(
-    //       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
-    //       gptResponse.choices[0]!.message.content!,
-    //     ) as GPTLikelihoodResponseType[];
-    //     console.log({ parsedLikelihoods });
-    //     setThreats(parsedThreats);
-    //     setLikelihoods(parsedLikelihoods);
-    //     setLoading(null);
-    //   }
-    // }
   };
 
   // this function will group the questions by the page and type

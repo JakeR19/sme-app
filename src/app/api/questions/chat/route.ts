@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { withSession } from "~/lib/auth.ts";
 import OpenAI from "openai";
 import { env } from "~/env";
 import { chatSystemInput } from "~/lib/constants";

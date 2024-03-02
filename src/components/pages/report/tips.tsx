@@ -20,7 +20,7 @@ export default function Tips({ id }: { id: string }) {
   }, [id]);
 
   return (
-    <div className="max-h-[50vh] rounded-lg border px-3 py-2 shadow-sm">
+    <div className="max-h-[50vh] overflow-y-auto rounded-lg border px-3 py-2 shadow-sm">
       <h1 className="font-semibold text-gray-700">AI Tips</h1>
       <div className="h-full">
         {isLoading && (

@@ -47,7 +47,7 @@ export default function ThreatChart({ answers }: { answers: Answer[] }) {
             dataKey="threat"
           />
           <YAxis fontSize={"12px"} width={2} />
-          <Bar dataKey="counts" fill="#82ca9d" />
+          <Bar dataKey="counts" fill="#5dade2" />
         </BarChart>
       </ResponsiveContainer>
     </div>
