@@ -1,12 +1,11 @@
 generator client {
     provider        = "prisma-client-js"
-    previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
-    relationMode = "prisma"
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
 }
 
 // Model, Session and VerificationToken models auto generated and are necessary for authentication (Github)
@@ -16,12 +15,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
+    refresh_token     String? // @db.Text
+    access_token      String? // @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? @db.Text
+    id_token          String? // @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -62,7 +61,7 @@ model VerificationToken {
 
 model Question {
     id String @id @default(cuid())
-    title String @db.LongText
+    title String // @db.LongText
     questionWeight Int
     page String
     type String
@@ -90,7 +89,7 @@ model Answer {
     question  Question @relation(fields: [questionId], references: [id])
     questionId String
 
-    likelihood Float @default(0.0) @db.Float
+    likelihood Float @default(0.0) // @db.Float
     calculation Int
     threat String
 
