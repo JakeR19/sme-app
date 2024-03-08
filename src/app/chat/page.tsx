@@ -148,23 +148,25 @@ export default function AIChatPage() {
               {chosenQuestion}
             </p>
           )}
-          <div
-            id="chatDiv"
-            className="max-h-[38vh] space-y-2 overflow-y-auto rounded-md border bg-gray-100 p-5"
-          >
-            {formattedMessages.map((m) => (
-              <div key={m.id}>
-                <div className="whitespace-pre-wrap text-sm">
-                  <p className="font-bold">
-                    {m.role === "user" ? "You" : "AI"}
-                  </p>
-                  <p>{m.content}</p>
+          {formattedMessages.length > 0 && (
+            <div
+              id="chatDiv"
+              className="max-h-[38vh] space-y-2 overflow-y-auto rounded-md border bg-gray-100 p-5"
+            >
+              {formattedMessages.map((m) => (
+                <div key={m.id}>
+                  <div className="whitespace-pre-wrap text-sm">
+                    <p className="font-bold">
+                      {m.role === "user" ? "You" : "AI"}
+                    </p>
+                    <p>{m.content}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-            {/* show loading indicator when ai is responding */}
-            {isLoading && <LoadingSpinner />}
-          </div>
+              ))}
+              {/* show loading indicator when ai is responding */}
+              {isLoading && <LoadingSpinner />}
+            </div>
+          )}
         </div>
       </div>
     </Container>
