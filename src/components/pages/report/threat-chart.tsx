@@ -19,10 +19,14 @@ export default function ThreatChart({ answers }: { answers: Answer[] }) {
   );
 
   // map the occurences to an array that the barchart can use
-  const result = Object.entries(threatOccurrences).map(([threat, counts]) => ({
-    threat,
-    counts,
-  }));
+  const result = Object.entries(threatOccurrences)
+    .map(([threat, counts]) => ({
+      threat,
+      counts,
+    }))
+    .filter((bar) => bar.threat);
+
+  console.log(result);
 
   return (
     <div className="max-h-[35vh] rounded-lg border px-3 py-2 shadow-sm">

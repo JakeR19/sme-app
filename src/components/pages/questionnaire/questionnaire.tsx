@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { LoadingPage } from "~/components/common/loading-spinner";
 import { riskCalculationAlgo } from "~/lib/utils";
+import { Button } from "@chakra-ui/react";
 
 export default function Questionnaire() {
   const [answers, setAnswers] = useState<Array<AnswersType>>([]);
@@ -163,6 +164,7 @@ export default function Questionnaire() {
             gptData.gptResponse.choices[0].message.content,
           ) as GPTLikelihoodResponseType[];
           const threats = gptData.parsedThreats as string[];
+          console.log({ parsedLikelihoods, threats });
           setThreats(threats);
           setLikelihoods(parsedLikelihoods);
           setLoading(null);
@@ -203,6 +205,27 @@ export default function Questionnaire() {
   return (
     <div className="flex flex-col justify-between overflow-y-auto">
       <div className="overflow-y-auto">
+        {/* <Button
+          onClick={() => {
+            setCompanyInformation({
+              companyName: "Microsoft",
+              sector: "Retail",
+            });
+            setAnswers(
+              data.map((question) => {
+                return {
+                  answer: "yes",
+                  answerWeight: question.yesWeight,
+                  questionId: question.id,
+                  questionWeight: question.questionWeight,
+                  title: question.title,
+                };
+              }),
+            );
+          }}
+        >
+          test
+        </Button> */}
         <QuestionnaireHeader
           title={isFirstIndex ? "Information" : pageNames[index]!}
           label={

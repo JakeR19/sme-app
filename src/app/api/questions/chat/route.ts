@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import { env } from "~/env";
 import { chatSystemInput } from "~/lib/constants";
 
-export const runtime = "edge";
+export const maxDuration = 60;
 
 const openai = new OpenAI({
   apiKey: env.OPENAI_API_KEY,
@@ -15,6 +15,7 @@ export async function POST(req: Request) {
     sector: string;
     questions: { id: string; title: string }[];
   };
+  console.log("PARAMS", { sector, questions });
 
   // call openai chat api to get common threats for specific sector
   const threatsResponse = await openai.chat.completions.create({
